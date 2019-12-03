@@ -19,15 +19,15 @@ function Map:init()
 
     self.tileWidth = 16
     self.tileHeight = 16
-    self.mapWidth = 30
+    self.mapWidth = 60 -- use this to make more room to scroll
     self.mapHeight = 28
     self.tiles = {}
 
     -- applies positive Y influence on anything affected
-    self.gravity = 15
+    self.gravity = 20
 
-    -- TODO associate player with map
-    -- self.player = Player(self)
+    --  associate player with map
+    self.player = Player(self)
 
     -- camera offsets
     self.camX = 0
@@ -47,7 +47,13 @@ function Map:init()
     end
 
     -- TODO: generate terrain
-
+    for y = self.mapHeight / 2, self.mapHeight do
+        for x = 1, self.mapWidth do
+            
+            -- support for multiple sheets per tile; storing tiles as tables 
+            self:setTile(x, y, TILE_FOREGROUND) --floor
+        end
+    end
 
 
     -- TODO: start the background music
@@ -76,12 +82,12 @@ end
 
 -- function to update camera offset with delta time
 function Map:update(dt)
-    -- TODO self.player:update(dt)
+    self.player:update(dt)
     
     -- TODO keep camera's X coordinate following the player, preventing camera from
     -- scrolling past 0 to the left and the map's width (clamps)
-    -- self.camX = math.max(0, math.min(self.player.x - VIRTUAL_WIDTH / 2,
-    --     math.min(self.mapWidthPixels - VIRTUAL_WIDTH, self.player.x)))
+    self.camX = math.max(0, math.min(self.player.x - VIRTUAL_WIDTH / 2,
+    math.min(self.mapWidthPixels - VIRTUAL_WIDTH, self.player.x)))
 end
 
 -- gets the tile type at a given pixel coordinate
@@ -115,5 +121,5 @@ function Map:render()
         end
     end
 
-    -- TODO self.player:render()
+    self.player:render()
 end
