@@ -1,9 +1,9 @@
 Class = require 'class'
 push = require 'push'
 
--- TODO require 'Animation'
+require 'Animation'
 require 'Map'
--- TODO require 'Player'
+require 'Player'
 
 -- close resolution to NES but 16:9
 VIRTUAL_WIDTH = 432

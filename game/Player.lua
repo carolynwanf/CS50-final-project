@@ -142,7 +142,7 @@ function Player:init(map)
         end,
         ['jumping'] = function(dt)
             -- break if we go below the surface
-            if self.y > 300 then
+            if self.y > 200 then -- used to be 300, adjust for half of screen
                 return
             end
 
