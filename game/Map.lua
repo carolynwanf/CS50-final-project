@@ -129,6 +129,12 @@ function Map:collides(tile)
     return false
 end
 
+function Map:inRange()
+    if self.player.x >= characters[self.screen + 1].x - 48 then
+        return true
+    end
+    return false
+end
 
 -- function to update camera offset with delta time
 function Map:update(dt)
@@ -143,19 +149,17 @@ function Map:update(dt)
         self.player.x = self.screen * 432
     end
 
+    for _, character in self.characters do
+        if self.player:collides(character) then
+            character.displayDialogue()
 
-    --TODO collidable
-    -- for _, character in self.characters do
-    --     if self.player:collides(character) then
-    --         character.displayDialogue()
+            self.currentTalkingThreshold = character.x + 100
+        end
+    end
 
-    --         self.currentTalkingThreshold = character.x + 100
-    --     end
-    -- end
+    if self.player.x >= self.currentTalkingThreshold then
 
-    -- if self.player.x >= self.currentTalkingThreshold then
-
-    -- end
+    end
 
     if characterCount > killCount then
         gameState = 'two options'
