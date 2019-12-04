@@ -19,12 +19,23 @@ function Characters:init(map)
     self.y = map.tileHeight * ((map.mapHeight - 2) / 2) - self.npcHeight
 
     self.spySprite = self.sprites[SPY] -- label the quads
-   
-    self.spyx = map.tileWidth * 18
+    self.n1Sprite = self.sprites[N_A]
+    self.n2Sprite = self.sprites[N_B]
+    self.n3Sprite = self.sprites[N_C]
+    self.bad1Sprite = self.sprites[BAD_A]
+    self.bad2Sprite = self.sprites[BAD_B]
+
+    self.n1x = map.tileWidth * 30 * 3
+    self.n2x = map.tileWidth * 30 * 7
+    self.n3x = map.tileWidth * 30 * 5
+    self.bad1x = map.tileWidth * 30 * 4
+    self.bad2x = map.tileWidth * 30 * 6
+    self.spyx =map.tileWidth * 30 * 2
 end
 
 function Characters:render()
     love.graphics.draw(self.spritesheet, self.spySprite, self.spyx, self.y)
+
    end
 
 function Characters:inRange(tile)
@@ -39,9 +50,16 @@ function Characters:inRange(tile)
             return true
         end
     end
-    
+
     return false
 end
 
-    
+
         
+    love.graphics.draw(self.spritesheet, self.n1Sprite, self.n1x, self.y)
+    love.graphics.draw(self.spritesheet, self.n2Sprite, self.n2x, self.y)
+    love.graphics.draw(self.spritesheet, self.n3Sprite, self.n3x, self.y)
+    love.graphics.draw(self.spritesheet, self.bad1Sprite, self.bad1x, self.y)
+    love.graphics.draw(self.spritesheet, self.bad2Sprite, self.bad2x, self.y)
+end
+>>>>>>> 492a59fa374d3f7a8f9fec13b755079c7e00f335
