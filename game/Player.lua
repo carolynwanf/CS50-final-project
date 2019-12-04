@@ -234,6 +234,8 @@ function Player:checkRightCollision()
     end
 end
 
+-- TODO check if within rance of NPC
+
 function Player:render()
     local scaleX
 
