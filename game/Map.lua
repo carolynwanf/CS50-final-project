@@ -162,7 +162,7 @@ function Map:update(dt)
         characterCount = characterCount - 1
     elseif characterCount == killCount and killCount ~= 0 then
         gameState = 'one option'
-        -- TODO spriteState = dead
+        character_status[self.screen] = 1
         killCount = killCount - 1
         characterCount = characterCount - 1
     -- set game state to end, when gamestate = end tally up dead
