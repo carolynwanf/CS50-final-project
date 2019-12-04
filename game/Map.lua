@@ -19,7 +19,7 @@ function Map:init()
 
     self.tileWidth = 16
     self.tileHeight = 16
-    self.mapWidth = 60 -- use this to make more room to scroll
+    self.mapWidth = 216 -- 27 (virt width) * 8 screens
     self.mapHeight = 28
     self.tiles = {}
 
