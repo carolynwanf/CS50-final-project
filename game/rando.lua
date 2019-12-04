@@ -1,1 +1,41 @@
-if
+-- make default gamestate two options in main.lua
+-- in update
+-- if character count > kill count
+--     state = two options
+--     offer kill option and avoid option    
+--     if ispressed(k)
+--          kill count - 1
+--          NPC state = dead
+--          if playerkilled == spy
+--              sum = sum + 1
+--          elseif playerkilled = neutral
+--              sum = sum + 2
+--          else 
+--              sum = sum + 10
+--          end
+--     end
+--     character count - 1
+-- if character count = kill count
+--      state = one option
+--      offer kill option
+--      killcount - 1
+--      NPC state = dead
+--      if playerkilled == spy
+--          sum = sum + 1
+--      elseif playerkilled = neutral
+--          sum = sum + 2
+--      else 
+--          sum = sum + 10
+--      end
+--      character count - 1
+
+--  end
+
+-- in print
+-- if state == two options
+--     print kill and avoid options
+-- end
+-- if state == one option
+--     print kill option only
+-- end
+
