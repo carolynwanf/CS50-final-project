@@ -2,8 +2,8 @@ require 'Util'
 
 Map = Class{}
 
-TILE_BACKGROUND = 2
-TILE_FOREGROUND = 1
+TILE_MIDGROUND = 2
+TILE_TOPSOIL = 1
 TILE_EMPTY = -1
 
  -- endgame variables
@@ -95,9 +95,13 @@ function Map:init()
     -- TODO: generate terrain
     for y = self.mapHeight / 2, self.mapHeight do
         for x = 1, self.mapWidth do
+            if y == self.mapHeight / 2 then
+                self:setTile(x, y, TILE_TOPSOIL)
+            else
             
-            -- support for multiple sheets per tile; storing tiles as tables 
-            self:setTile(x, y, TILE_FOREGROUND) --floor
+                -- support for multiple sheets per tile; storing tiles as tables 
+                self:setTile(x, y, TILE_MIDGROUND) --floor
+            end
         end
     end
 
@@ -111,7 +115,7 @@ end
 function Map:collides(tile)
     -- define our collidable tiles
     local collidables = {
-        TILE_FOREGROUND
+        TILE_TOPSOIL
     }
 
     -- iterate and return true if our tile type matches
