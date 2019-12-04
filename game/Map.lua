@@ -37,6 +37,9 @@ function Map:init()
     -- initialize gamestate
     gameState = 'start'
 
+    character_status = {0, 0, 0, 0, 0, 0}
+    character_worth = {1, 2, 10, 2, 10 ,2}
+
     -- applies positive Y influence on anything affected
     self.gravity = 20
 
@@ -50,22 +53,9 @@ function Map:init()
     self.currentTalkingCharacter = nil
     self.currentTalkingThreshold = 100
 
-<<<<<<< HEAD
-    -- endgame variables
-    self.characterCount = 6
-    self.killCount = 3
-    self.sum = 0
-
-    self.badCount = 0
-    self.spyCount = 0
-    self.neutralCount = 0
-    self.savePercentage = nil
-
     -- screen for boundary checking
     self.screen = 0
 
-=======
->>>>>>> e72e87ce46d27e3e42b54cec1a510af2fdffc3ce
 
     self.characters = {
         Character(self.tileWidth * 18, SPY, {
@@ -167,7 +157,7 @@ function Map:update(dt)
         gameState = 'two options'
         if love.keyboard.wasPressed('k') then
             killCount = killCount - 1
-            -- TODO spriteState = dead
+            character_status[self.screen] = 1
         end
         characterCount = characterCount - 1
     elseif characterCount == killCount and killCount ~= 0 then
