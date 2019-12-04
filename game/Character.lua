@@ -40,6 +40,7 @@ function Character:render()
         love.graphics.draw(self.bubTexture, self.x - 100, 90)
     end
     
+    love.graphics.setColor(1, 1, 1, 1)
     love.graphics.draw(self.bubTexture, self.x - 160, 120)
     love.graphics.draw(self.spritesheet, self.sprite, self.x, 188)
     love.graphics.setColor(0,0,0,255)
