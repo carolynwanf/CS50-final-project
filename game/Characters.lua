@@ -26,3 +26,22 @@ end
 function Characters:render()
     love.graphics.draw(self.spritesheet, self.spySprite, self.spyx, self.y)
    end
+
+function Characters:inRange(tile)
+    -- define NPC tiles
+    local collidables = {
+        SPY, N_A, N_B, N_C, BAD_A, BAD_B
+    }
+    -- iterate and return true if our tile type matches
+    -- how to iterate over key-value pairs in lua
+    for _, v in ipairs(collidables) do
+        if tile.id == v then
+            return true
+        end
+    end
+    
+    return false
+end
+
+    
+        
