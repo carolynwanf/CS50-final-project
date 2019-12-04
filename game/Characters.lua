@@ -33,9 +33,11 @@ function Characters:init(map)
     self.spyx =map.tileWidth * 30 * 2
 end
 
+<<<<<<< HEAD
 function Characters:render()
     love.graphics.draw(self.spritesheet, self.spySprite, self.spyx, self.y)
-
+=======
+>>>>>>> 66d83bfb2cf1e132043b2d4f3f96d43a486b6c57
 function Characters:inRange(tile)
     -- define NPC tiles
     local collidables = {
@@ -52,11 +54,15 @@ function Characters:inRange(tile)
     return false
 end
 
+<<<<<<< HEAD
         
+=======
+function Characters:render()
+    love.graphics.draw(self.spritesheet, self.spySprite, self.spyx, self.y)
+>>>>>>> 66d83bfb2cf1e132043b2d4f3f96d43a486b6c57
     love.graphics.draw(self.spritesheet, self.n1Sprite, self.n1x, self.y)
     love.graphics.draw(self.spritesheet, self.n2Sprite, self.n2x, self.y)
     love.graphics.draw(self.spritesheet, self.n3Sprite, self.n3x, self.y)
     love.graphics.draw(self.spritesheet, self.bad1Sprite, self.bad1x, self.y)
     love.graphics.draw(self.spritesheet, self.bad2Sprite, self.bad2x, self.y)
 end
->>>>>>> 492a59fa374d3f7a8f9fec13b755079c7e00f335
