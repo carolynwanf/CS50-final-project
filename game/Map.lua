@@ -53,6 +53,19 @@ function Map:init()
     self.currentTalkingCharacter = nil
     self.currentTalkingThreshold = 100
 
+<<<<<<< HEAD
+=======
+    -- endgame variables
+    self.characterCount = 6
+    self.killCount = 3
+    self.sum = 0
+
+    self.badCount = 0
+    self.spyCount = 0
+    self.neutralCount = 0
+    self.savePercentage = nil
+
+>>>>>>> 24edc73005e113e96183afa6ab25d454185d3a8b
     -- screen for boundary checking
     self.screen = 0
 
@@ -64,16 +77,16 @@ function Map:init()
         Character(self.tileWidth * 30 * 3, NEUTRAL_A, {
             'Hello!'
         }),
-        Character(self.tileWidth * 30 * 7, NEUTRAL_B, {
+        Character(self.tileWidth * 30 * 4, BAD_A, {
             'Hello!'
         }),
         Character(self.tileWidth * 30 * 5, NEUTRAL_C, {
             'Hello!'
         }),
-        Character(self.tileWidth * 30 * 4, BAD_A, {
+        Character(self.tileWidth * 30 * 6, BAD_B, {
             'Hello!'
         }),
-        Character(self.tileWidth * 30 * 6, BAD_B, {
+        Character(self.tileWidth * 30 * 7, NEUTRAL_B, {
             'Hello!'
         })
     }
