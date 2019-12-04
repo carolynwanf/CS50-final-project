@@ -36,8 +36,6 @@ end
 function Characters:render()
     love.graphics.draw(self.spritesheet, self.spySprite, self.spyx, self.y)
 
-   end
-
 function Characters:inRange(tile)
     -- define NPC tiles
     local collidables = {
@@ -53,7 +51,6 @@ function Characters:inRange(tile)
 
     return false
 end
-
 
         
     love.graphics.draw(self.spritesheet, self.n1Sprite, self.n1x, self.y)
