@@ -5,7 +5,6 @@ require 'Animation'
 require 'Map'
 require 'Player'
 require 'Character'
-require 'Endgame'
 
 -- close resolution to NES but 16:9
 VIRTUAL_WIDTH = 432

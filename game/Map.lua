@@ -34,6 +34,20 @@ function Map:init()
     self.camX = 0
     self.camY = -3
 
+    self.currentTalkingCharacter = nil
+    self.currentTalkingThreshold = 100
+
+    -- endgame variables
+    self.characterCount = 6
+    self.killCount = 3
+    self.sum = 0
+
+    self.badCount = 0
+    self.spyCount = 0
+    self.neutralCount = 0
+    self.savePercentage = nil
+
+
     self.characters = {
         Character(self.tileWidth * 8, SPY, {
             'I am a spy!'
@@ -107,10 +121,17 @@ end
 function Map:update(dt)
     self.player:update(dt)
 
-    for _, character in self.characters do
-        if self.player:collides(character) then
-            character.displayDialogue()
-        end
+    --TODO collidable
+    -- for _, character in self.characters do
+    --     if self.player:collides(character) then
+    --         character.displayDialogue()
+
+    --         self.currentTalkingThreshold = character.x + 100
+    --     end
+    -- end
+
+    if self.player.x >= self.currentTalkingThreshold then
+
     end
     
     -- TODO keep camera's X coordinate following the player, preventing camera from
@@ -136,6 +157,30 @@ end
 -- sets a tile at a given x-y coordinate to an integer value
 function Map:setTile(x, y, id)
     self.tiles[(y - 1) * self.mapWidth + x] = id
+end
+
+function Map:endGame()
+    self.sum = self.spyCount +
+    self.neutralCount * 2 +
+    self.badCount * 10
+
+    if self.sum == 22 then -- BBN
+        self.savePercentage = 100 -- percentage saved
+    elseif self.sum == 21 then -- BBS
+        self.savePercentage = 20
+    elseif self.sum == 14 then -- BNN
+        self.savePercentage = 70
+    elseif self.sum == 13 then -- BNS
+        self.savePercentage = 10
+    elseif self.sum == 6 then -- NNN
+        self.savePercentage = 50
+    else if self.sum == 5 then -- NNS
+        self.savePercentage = 0
+    else -- WRONG
+        self.savePercentage = 6969
+    end
+end
+    
 end
 
 
