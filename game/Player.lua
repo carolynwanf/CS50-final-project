@@ -14,6 +14,9 @@ function Player:init(map)
     self.width = 16
     self.height = 20
 
+    self.playerStates = {'dialogue', 'move', 'end'}
+    self.playerState = {'move'}
+
     -- offset from top left to center to support sprite flipping
     self.xOffset = 8
     self.yOffset = 10
