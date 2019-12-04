@@ -53,19 +53,6 @@ function Map:init()
     self.currentTalkingCharacter = nil
     self.currentTalkingThreshold = 100
 
-<<<<<<< HEAD
-=======
-    -- endgame variables
-    self.characterCount = 6
-    self.killCount = 3
-    self.sum = 0
-
-    self.badCount = 0
-    self.spyCount = 0
-    self.neutralCount = 0
-    self.savePercentage = nil
-
->>>>>>> 24edc73005e113e96183afa6ab25d454185d3a8b
     -- screen for boundary checking
     self.screen = 0
 
