@@ -49,14 +49,6 @@ function Player:init(map)
     self.y = map.tileHeight * ((map.mapHeight - 2) / 2) - self.height
     self.x = map.tileWidth * 10
 
-    self.screenLeftBounds = {0, 432, 2 * 432, 3 * 432, 4 * 432, 5 * 432,
-                             6 * 432, 7 * 432}
-    self.leftBound = self.screenLeftBounds[1]
-
-    self.screenRightBounds = {432, 2 * 432, 3 * 432, 4 * 432, 5 * 432,
-    6 * 432, 7 * 432, 8 * 432}
-    self.rightBound = self.screenRightBounds[1] - self.width
-
     -- initialize all player animations
     self.animations = {
         ['idle'] = Animation({
@@ -216,10 +208,7 @@ end
 
 -- checks two tiles to our left to see if a collision occurred
 function Player:checkLeftCollision()
-    if self.x < self.leftBound then
-        self.x = self.leftBound
-    end
-
+    
     if self.dx < 0 then
         -- check if there's a tile directly beneath us
         if self.map:collides(self.map:tileAt(self.x - 1, self.y)) or
@@ -234,9 +223,6 @@ end
 
 -- checks two tiles to our right to see if a collision occurred
 function Player:checkRightCollision() 
-    if self.x > self.rightBound then
-        self.x = self.rightBound
-    end
     
     if self.dx > 0 then
         -- check if there's a tile directly beneath us

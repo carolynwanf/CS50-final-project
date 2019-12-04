@@ -121,6 +121,20 @@ end
 function Map:update(dt)
     self.player:update(dt)
 
+    self.screenLeftBounds = {0, 2 , 3 , 4 , 5 , 6 , 7 }
+    self.leftBound = self.screenLeftBounds[1]
+
+    self.screenRightBounds =, 2 , 3 , 4 , 5 , 6 , 7 , 8 }
+    self.rightBound = self.screenRightBounds[1] - self.player.width
+
+    if self.player.x < self.leftBound * VIRTUAL_WIDTH then
+        self.player.x = self.leftBound * VIRTUAL_WIDTH
+    end
+    
+    if self.player.x > self.rightBound * VIRTUAL_WIDTH then
+        self.player.x = self.rightBound * VIRTUAL_WIDTH
+    end
+
     --TODO collidable
     -- for _, character in self.characters do
     --     if self.player:collides(character) then
