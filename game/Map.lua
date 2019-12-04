@@ -6,6 +6,7 @@ TILE_BACKGROUND = 2
 TILE_FOREGROUND = 1
 TILE_EMPTY = -1
 
+characterList = {'spy', ''}
 
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
@@ -28,11 +29,32 @@ function Map:init()
 
     --  associate player with map
     self.player = Player(self)
-    self.characters = Characters(self)
 
     -- camera offsets
     self.camX = 0
     self.camY = -3
+
+    self.characters = {
+        Character(self.tileWidth * 8, SPY, {
+            'I am a spy!'
+        }),
+        Character(self.tileWidth * 30 * 3, NEUTRAL_A, {
+            'Hello!'
+        }),
+        Character(self.tileWidth * 30 * 7, NEUTRAL_B, {
+            'Hello!'
+        }),
+        Character(self.tileWidth * 30 * 5, NEUTRAL_C, {
+            'Hello!'
+        }),
+        Character(self.tileWidth * 30 * 4, BAD_A, {
+            'Hello!'
+        }),
+        Character(self.tileWidth * 30 * 6, BAD_B, {
+            'Hello!'
+        })
+    }
+
 
     -- cache width and height of map in pixels
     self.mapWidthPixels = self.mapWidth * self.tileWidth
@@ -84,6 +106,12 @@ end
 -- function to update camera offset with delta time
 function Map:update(dt)
     self.player:update(dt)
+
+    for _, character in self.characters do
+        if self.player:collides(character) then
+            character.displayDialogue()
+        end
+    end
     
     -- TODO keep camera's X coordinate following the player, preventing camera from
     -- scrolling past 0 to the left and the map's width (clamps)
@@ -110,6 +138,7 @@ function Map:setTile(x, y, id)
     self.tiles[(y - 1) * self.mapWidth + x] = id
 end
 
+
 -- renders our map to the screen, to be called by main's render
 function Map:render()
     for y = 1, self.mapHeight do
@@ -122,6 +151,11 @@ function Map:render()
         end
     end
 
+    for key, character in ipairs(self.characters) do
+        character:render()
+    end
+
+
     self.player:render()
-    self.characters:render()
+    
 end

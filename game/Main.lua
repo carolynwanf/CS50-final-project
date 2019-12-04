@@ -4,7 +4,7 @@ push = require 'push'
 require 'Animation'
 require 'Map'
 require 'Player'
-require 'Characters'
+require 'Character'
 require 'Endgame'
 
 -- close resolution to NES but 16:9
@@ -21,9 +21,6 @@ math.randomseed(os.time())
 -- makes upscaling look pixel-y instead of blurry
 love.graphics.setDefaultFilter('nearest', 'nearest')
 
--- an object to contain our map data
-map = Map()
-
 -- performs initialization of all objects and data needed by program
 function love.load()
 
@@ -37,6 +34,9 @@ function love.load()
     })
 
     love.window.setTitle('Resurrection (in progress)')
+
+    -- an object to contain our map data
+    map = Map()
 
     love.keyboard.keysPressed = {}
     love.keyboard.keysReleased = {}
