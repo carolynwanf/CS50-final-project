@@ -28,6 +28,7 @@ function Map:init()
 
     --  associate player with map
     self.player = Player(self)
+    self.characters = Characters(self)
 
     -- camera offsets
     self.camX = 0
@@ -122,4 +123,5 @@ function Map:render()
     end
 
     self.player:render()
+    self.characters:render()
 end

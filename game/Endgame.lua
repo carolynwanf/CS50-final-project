@@ -1,8 +1,10 @@
 Endgame = Class{}
 
-self.characterCount = 6
-self.killCount = 3
-self.sum = 0
+function Endgame:init()
+    self.characterCount = 6
+    self.killCount = 3
+    self.sum = 0
+end
 
 function Endgame:savecount()
     self.sum = characters.spyCount +
@@ -24,5 +26,8 @@ function Endgame:savecount()
     else -- WRONG
         return 6969
     end
-
+    
+    end
 end
+
+
