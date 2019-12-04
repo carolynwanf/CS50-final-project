@@ -62,19 +62,19 @@ function Map:init()
             'I am a spy!'
         }),
         Character(self.tileWidth * 30 * 3, NEUTRAL_A, {
-            'Hello!'
+            'Im neutral a!'
         }),
         Character(self.tileWidth * 30 * 4, BAD_A, {
-            'Hello!'
+            'im a baddie!'
         }),
         Character(self.tileWidth * 30 * 5, NEUTRAL_C, {
-            'Hello!'
+            'neutral c!'
         }),
         Character(self.tileWidth * 30 * 6, BAD_B, {
-            'Hello!'
+            'baddie b!'
         }),
         Character(self.tileWidth * 30 * 7, NEUTRAL_B, {
-            'Hello!'
+            'n b!'
         })
     }
 

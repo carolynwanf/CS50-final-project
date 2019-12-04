@@ -16,7 +16,7 @@ function Character:init(x, spriteID, dialogueOptions)
 
     self.sprite = self.sprites[spriteID]
     self.x = x
-    self.dialogue = dialogueOptions
+    self.dialogue = dialogueOptions[1]
 
 
     self.npcWidth = 16
@@ -38,9 +38,11 @@ function Character:render()
     if self.speechBubble then
         -- draw speech bubble image next to character
         love.graphics.draw(self.bubTexture, self.x - 100, 90)
-        -- render dialogue inside speech bubbl1e
     end
-
+    
+    love.graphics.draw(self.bubTexture, self.x - 100, 90)
     love.graphics.draw(self.spritesheet, self.sprite, self.x, 188)
+    love.graphics.setColor(0,0,0,255)
+    love.graphics.print(self.dialogue, self.x - 20, 105)
     
 end
