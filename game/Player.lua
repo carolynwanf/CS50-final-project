@@ -130,7 +130,6 @@ function Player:init(map)
             -- check for collisions moving left and right
             self:checkRightCollision()
             self:checkLeftCollision()
-            self:checkifinRange()
 
             -- check if there's a tile directly beneath us
             if not self.map:collides(self.map:tileAt(self.x, self.y + self.height)) and
@@ -173,7 +172,6 @@ function Player:init(map)
             -- check for collisions moving left and right
             self:checkRightCollision()
             self:checkLeftCollision()
-            self:checkifinRange()
         end
     }
 end
@@ -237,14 +235,14 @@ function Player:checkRightCollision()
 end
 
 -- TODO check if within range of NPC
-function Player:checkifinRange
-    if self.dx > 0 then
-        if self.map:inRange(self.map:tileAt(self.x + self.width + 3, self.y)) then
-            self.dx = 0
-            self.x = (self.map:tileAt(self.x + self.width, self.y).x - 1) * self.map.tileWidth - self.width
-        end
-    end
-end
+-- function Player:checkifinRange()
+--     if self.dx > 0 then
+--         if self.map:inRange(self.map:tileAt(self.x + self.width + 3, self.y)) then
+--             self.dx = 0
+--             self.x = (self.map:tileAt(self.x + self.width, self.y).x - 1) * self.map.tileWidth - self.width
+--         end
+--     end
+-- end
 
 function Player:render()
     local scaleX
