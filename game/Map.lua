@@ -47,9 +47,12 @@ function Map:init()
     self.neutralCount = 0
     self.savePercentage = nil
 
+    -- screen for boundary checking
+    self.screen = 0
+
 
     self.characters = {
-        Character(self.tileWidth * 8, SPY, {
+        Character(self.tileWidth * 18, SPY, {
             'I am a spy!'
         }),
         Character(self.tileWidth * 30 * 3, NEUTRAL_A, {
@@ -121,19 +124,15 @@ end
 function Map:update(dt)
     self.player:update(dt)
 
-    self.screenLeftBounds = {0, 2 , 3 , 4 , 5 , 6 , 7 }
-    self.leftBound = self.screenLeftBounds[1]
-
-    self.screenRightBounds =, 2 , 3 , 4 , 5 , 6 , 7 , 8 }
-    self.rightBound = self.screenRightBounds[1] - self.player.width
-
-    if self.player.x < self.leftBound * VIRTUAL_WIDTH then
-        self.player.x = self.leftBound * VIRTUAL_WIDTH
+    if self.player.x < self.screen * 432 then
+        self.player.x = self.screen * 432
     end
     
-    if self.player.x > self.rightBound * VIRTUAL_WIDTH then
-        self.player.x = self.rightBound * VIRTUAL_WIDTH
+    if self.player.x > (self.screen + 1) * 432 - self.player.width then
+        self.screen = self.screen + 1
+        self.player.x = self.screen * 432
     end
+
 
     --TODO collidable
     -- for _, character in self.characters do
@@ -144,9 +143,9 @@ function Map:update(dt)
     --     end
     -- end
 
-    if self.player.x >= self.currentTalkingThreshold then
+    -- if self.player.x >= self.currentTalkingThreshold then
 
-    end
+    -- end
     
     -- TODO keep camera's X coordinate following the player, preventing camera from
     -- scrolling past 0 to the left and the map's width (clamps)
@@ -173,33 +172,33 @@ function Map:setTile(x, y, id)
     self.tiles[(y - 1) * self.mapWidth + x] = id
 end
 
-function Map:endGame()
-    self.sum = self.spyCount +
-    self.neutralCount * 2 +
-    self.badCount * 10
+-- function Map:endGame()
+--     self.sum = self.spyCount +
+--     self.neutralCount * 2 +
+--     self.badCount * 10
 
-    if self.sum == 22 then -- BBN
-        self.savePercentage = 100 -- percentage saved
-    elseif self.sum == 21 then -- BBS
-        self.savePercentage = 20
-    elseif self.sum == 14 then -- BNN
-        self.savePercentage = 70
-    elseif self.sum == 13 then -- BNS
-        self.savePercentage = 10
-    elseif self.sum == 6 then -- NNN
-        self.savePercentage = 50
-    else if self.sum == 5 then -- NNS
-        self.savePercentage = 0
-    else -- WRONG
-        self.savePercentage = 6969
-    end
-end
+--     if self.sum == 22 then -- BBN
+--         self.savePercentage = 100 -- percentage saved
+--     elseif self.sum == 21 then -- BBS
+--         self.savePercentage = 20
+--     elseif self.sum == 14 then -- BNN
+--         self.savePercentage = 70
+--     elseif self.sum == 13 then -- BNS
+--         self.savePercentage = 10
+--     elseif self.sum == 6 then -- NNN
+--         self.savePercentage = 50
+--     else if self.sum == 5 then -- NNS
+--         self.savePercentage = 0
+--     else -- WRONG
+--         self.savePercentage = 6969
+--     end
     
-end
+-- end
 
 
 -- renders our map to the screen, to be called by main's render
 function Map:render()
+
     for y = 1, self.mapHeight do
         for x = 1, self.mapWidth do
             local tile = self:getTile(x, y)
@@ -210,11 +209,10 @@ function Map:render()
         end
     end
 
+    self.player:render()
+
     for key, character in ipairs(self.characters) do
         character:render()
     end
-
-
-    self.player:render()
     
 end
