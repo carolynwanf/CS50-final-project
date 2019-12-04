@@ -235,9 +235,9 @@ function Player:checkRightCollision()
 end
 
 -- TODO check if within range of NPC
-function Player:checkifinRange
+function Player:checkifinRange()
     if self.dx > 0 then
-        if elf.map:inRange(self.map:tileAt(self.x + self.width + 3, self.y)) then
+        if self.map:inRange(self.map:tileAt(self.x + self.width + 3, self.y)) then
             self.dx = 0
             self.x = (self.map:tileAt(self.x + self.width, self.y).x - 1) * self.map.tileWidth - self.width
         end
