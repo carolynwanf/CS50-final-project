@@ -6,6 +6,16 @@ TILE_BACKGROUND = 2
 TILE_FOREGROUND = 1
 TILE_EMPTY = -1
 
+ -- endgame variables
+ characterCount = 6
+ killCount = 3
+ sum = 0
+
+ badCount = 0
+ spyCount = 0
+ neutralCount = 0
+ savePercentage = nil
+
 characterList = {'spy', ''}
 
 -- a speed to multiply delta time to scroll map; smooth value
@@ -24,6 +34,9 @@ function Map:init()
     self.mapHeight = 28
     self.tiles = {}
 
+    -- initialize gamestate
+    gameState = 'start'
+
     -- applies positive Y influence on anything affected
     self.gravity = 20
 
@@ -36,16 +49,6 @@ function Map:init()
 
     self.currentTalkingCharacter = nil
     self.currentTalkingThreshold = 100
-
-    -- endgame variables
-    self.characterCount = 6
-    self.killCount = 3
-    self.sum = 0
-
-    self.badCount = 0
-    self.spyCount = 0
-    self.neutralCount = 0
-    self.savePercentage = nil
 
 
     self.characters = {
@@ -133,6 +136,27 @@ function Map:update(dt)
     if self.player.x >= self.currentTalkingThreshold then
 
     end
+
+    if characterCount > killCount then
+        gameState = 'two options'
+        if love.keyboard.wasPressed('k') then
+            killCount = killCount - 1
+            -- TODO spriteState = dead
+        end
+        characterCount = characterCount - 1
+    elseif characterCount == killCount and killCount ~= 0 then
+        gameState = 'one option'
+        -- TODO spriteState = dead
+        killCount = killCount - 1
+        characterCount = characterCount - 1
+    -- set game state to end, when gamestate = end tally up dead
+    else
+        gameState = 'end'
+    end
+
+
+            
+
     
     -- TODO keep camera's X coordinate following the player, preventing camera from
     -- scrolling past 0 to the left and the map's width (clamps)
