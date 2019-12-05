@@ -37,6 +37,10 @@ function Map:init()
     self.mapHeight = 28
     self.tiles = {}
 
+    -- dialogue variable
+    self.dialogue_Fininshed = false
+    self.dialogue_number = 1
+
     -- initialize gamestate
     gameState = 'start'
 
@@ -149,7 +153,7 @@ function Map:collides(tile)
 end
 
 function Map:inRange()
-    if self.player.x >= characters[self.screen + 1].x - 48 then
+    if self.player.x >= self.characters[self.screen + 1].x - 48 then
         return true
     end
     return false
@@ -166,6 +170,12 @@ function Map:update(dt)
     if self.player.x > (self.screen + 1) * 432 - self.player.width then
         self.screen = self.screen + 1
         self.player.x = self.screen * 432
+    end
+
+    if self:inRange() and not self.dialogue_Fininshed then
+        -- player.playerState = 'dialogue'
+        -- if enter pressed then
+        self.characters[self.screen + 1]:displayDialogue()
     end
 
     -- for _, character in self.characters do

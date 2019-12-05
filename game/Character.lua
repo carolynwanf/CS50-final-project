@@ -15,9 +15,10 @@ function Character:init(x, spriteID, dialogueOptions)
 
     self.bubTexture = love.graphics.newImage('graphics/bub.png')
 
+    self.dialogue_Options = dialogueOptions
+
     self.sprite = self.sprites[spriteID]
     self.x = x
-    self.dialogue = dialogueOptions[1]
 
 
     self.npcWidth = 16
@@ -26,25 +27,26 @@ function Character:init(x, spriteID, dialogueOptions)
 end
 
 function Character:displayDialogue()
-    self.speechBubble = true
+   self.speechBubble = true
 end
 
-function Character:update(dt)
-    -- find some way to determine when to disable speech bubble
-    self.speechBubble = false
-end
+-- function Character:update(dt)
+--     -- find some way to determine when to disable speech bubble
+--     self.speechBubble = false
+-- end
 
 function Character:render()
 
     if self.speechBubble then
         -- draw speech bubble image next to character
-        love.graphics.draw(self.bubTexture, self.x - 100, 90)
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.draw(self.bubTexture, self.x - 160, 120)
+        love.graphics.setColor(0,0,0,255)
+        love.graphics.print(map.characters[map.screen + 1].dialogue_Options, map.characters[map.screen + 1].x - 80, 135) --
+        love.graphics.setColor(1,1,1,1)
     end
     
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.draw(self.bubTexture, self.x - 160, 120)
     love.graphics.draw(self.spritesheet, self.sprite, self.x, 188)
-    love.graphics.setColor(0,0,0,255)
-    love.graphics.print(self.dialogue, self.x - 80, 135)
     
 end
