@@ -62,22 +62,22 @@ function Map:init()
 
 
     self.characters = {
-        Character(self.tileWidth * 18, SPY, {
+        Character(VIRTUAL_WIDTH - 100, SPY, {
             'I am a spy!'
         }),
-        Character(self.tileWidth * 30 * 3, NEUTRAL_A, {
+        Character(VIRTUAL_WIDTH * 2 - 100, NEUTRAL_A, {
             'Im neutral a!'
         }),
-        Character(self.tileWidth * 30 * 4, BAD_A, {
+        Character(VIRTUAL_WIDTH * 3 - 100, BAD_A, {
             'im a baddie!'
         }),
-        Character(self.tileWidth * 30 * 5, NEUTRAL_C, {
+        Character(VIRTUAL_WIDTH * 4 - 100, NEUTRAL_C, {
             'neutral c!'
         }),
-        Character(self.tileWidth * 30 * 6, BAD_B, {
+        Character(VIRTUAL_WIDTH * 5 - 100, BAD_B, {
             'baddie b!'
         }),
-        Character(self.tileWidth * 30 * 7, NEUTRAL_B, {
+        Character(VIRTUAL_WIDTH * 6 - 100, NEUTRAL_B, {
             'n b!'
         })
     }
@@ -134,7 +134,8 @@ function Map:collides(tile)
 end
 
 function Map:inRange()
-    if self.player.x >= self.characters[self.screen + 1].x - 48 then
+    if self.player.x >= self.characters[self.screen + 1].x - 48 and self.player.x < (self.screen + 1) * VIRTUAL_WIDTH then
+        print('in range of ',self.screen + 1)
         return true
     end
     return false
@@ -144,20 +145,23 @@ end
 function Map:update(dt)
     self.player:update(dt)
 
-    if self.player.x < self.screen * 432 then
-        self.player.x = self.screen * 432
+    if self.player.x < self.screen * VIRTUAL_WIDTH then
+        self.player.x = self.screen * VIRTUAL_WIDTH
     end
     
-    if self.player.x > (self.screen + 1) * 432 - self.player.width then
+    if self.player.x > (self.screen + 1) * VIRTUAL_WIDTH - self.player.width then
         self.screen = self.screen + 1
-        self.player.x = self.screen * 432
+        self.player.x = self.screen * VIRTUAL_WIDTH
     end
 
     if self:inRange() and not self.dialogue_Fininshed then
         -- player.playerState = 'dialogue'
         -- if enter pressed then
         self.characters[self.screen + 1]:displayDialogue()
+    else
+        self.characters[self.screen + 1]:stopDialogue()
     end
+
 
     -- for _, character in self.characters do
     --     if self.player:collides(character) then
