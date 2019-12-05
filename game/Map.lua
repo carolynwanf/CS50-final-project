@@ -176,6 +176,7 @@ function Map:update(dt)
     -- set game state to end, when gamestate = end tally up dead
     else
         gameState = 'end'
+
     end
 
 
@@ -207,27 +208,30 @@ function Map:setTile(x, y, id)
     self.tiles[(y - 1) * self.mapWidth + x] = id
 end
 
--- function Map:endGame()
---     self.sum = self.spyCount +
---     self.neutralCount * 2 +
---     self.badCount * 10
 
---     if self.sum == 22 then -- BBN
---         self.savePercentage = 100 -- percentage saved
---     elseif self.sum == 21 then -- BBS
---         self.savePercentage = 20
---     elseif self.sum == 14 then -- BNN
---         self.savePercentage = 70
---     elseif self.sum == 13 then -- BNS
---         self.savePercentage = 10
---     elseif self.sum == 6 then -- NNN
---         self.savePercentage = 50
---     else if self.sum == 5 then -- NNS
---         self.savePercentage = 0
---     else -- WRONG
---         self.savePercentage = 6969
+-- function Map:endGame()
+--     if gameState = 'end' then
+--         for index, status in character_status do
+--             points = character_status[index] * character_worth[index]
+--             sum = sum + points
+--         end
+--         if sum == 22 then -- BBN
+--             savePercentage = 100
+--         elseif sum == 21 then -- BBS
+--             savePercentage = 20
+--         elseif sum == 14 then -- BNN
+--             savePercentage = 70
+--         elseif sum == 13 then -- BNS
+--             savePercentage = 10
+--         elseif sum == 6 then -- NNN
+--             savePercentage = 50
+--         else if sum == 5 then -- NNS
+--             savePercentage = 0
+--         else -- WRONG
+--             savePercentage = 6969
+--         end
 --     end
-    
+--     return savePercentage
 -- end
 
 
