@@ -6,6 +6,9 @@ TILE_MIDGROUND = 2
 TILE_TOPSOIL = 1
 TILE_EMPTY = -1
 
+MAGMA_LEFT = 3
+MAGMA_RIGHT = 4
+
  -- endgame variables
  characterCount = 6
  killCount = 3
@@ -103,6 +106,22 @@ function Map:init()
                 self:setTile(x, y, TILE_MIDGROUND) --floor
             end
         end
+    end
+
+    local x = 1
+    while x < self.mapWidth do
+        
+        -- 10% chance to generate a magma puddle
+        -- make sure we're 2 tiles from edge at least
+        if x < self.mapWidth - 2 then
+            if math.random(10) == 1 then
+
+                self:setTile(x, self.mapHeight / 2, MAGMA_LEFT)
+                self:setTile(x + 1, self.mapHeight / 2, MAGMA_RIGHT)
+            end
+            
+        end
+        x = x + 2
     end
 
 
