@@ -7,6 +7,7 @@ NEUTRAL_C = 9
 BAD_A = 1
 BAD_B = 3
 
+
 function Character:init(x, spriteID, dialogueOptions)
     -- TODO generate all characters in the map
     self.spritesheet = love.graphics.newImage('graphics/npcs.png')
