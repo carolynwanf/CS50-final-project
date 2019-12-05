@@ -149,13 +149,13 @@ function Map:update(dt)
         self.player.x = self.screen * 432
     end
 
-    for _, character in self.characters do
-        if self.player:collides(character) then
-            character.displayDialogue()
+    -- for _, character in self.characters do
+    --     if self.player:collides(character) then
+    --         character.displayDialogue()
 
-            self.currentTalkingThreshold = character.x + 100
-        end
-    end
+    --         self.currentTalkingThreshold = character.x + 100
+    --     end
+    -- end
 
     if self.player.x >= self.currentTalkingThreshold then
 
