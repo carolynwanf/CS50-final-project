@@ -144,7 +144,7 @@ function Map:init()
                 self:setTile(x + 1, self.mapHeight / 2, MAGMA_MIDDLE)
                 self:setTile(x + 2, self.mapHeight / 2, MAGMA_RIGHT)
 
-                local RISE = math.random(3,5)
+                local RISE = math.random(2,4)
                 self:setTile(x, self.mapHeight / 2 - RISE, PLATFORM_LEFT)
                 self:setTile(x + 1, self.mapHeight / 2 - RISE, PLATFORM_MIDDLE)
                 self:setTile(x + 2, self.mapHeight / 2 - RISE, PLATFORM_RIGHT)
