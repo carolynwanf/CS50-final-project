@@ -175,7 +175,14 @@ function Player:init(map)
             -- check for collisions moving left and right
             self:checkRightCollision()
             self:checkLeftCollision()
-        end
+        end,
+        -- ['dead'] = function(dt)
+        --     if self:checkDeath() then
+        --         self.dx = 0
+        --         self.x = 0
+        --         -- self.animation = self.animations['dead']
+        --     end
+        -- end
     }
 end
 
@@ -246,9 +253,10 @@ end
 --             self.map:collides(self.map:tileAt(self.x - 1, self.y)) or
 --             self.map:collides(self.map:tileAt(self.x - 1, self.y + self.height - 1)) then
                 
---             gameState = 'death'
+--             return true
 --         end
 --     end
+--     return false
 -- end
 
 -- TODO check if within range of NPC
