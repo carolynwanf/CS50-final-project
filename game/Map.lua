@@ -7,7 +7,8 @@ TILE_TOPSOIL = 1
 TILE_EMPTY = -1
 
 MAGMA_LEFT = 3
-MAGMA_RIGHT = 4
+MAGMA_MIDDLE = 4
+MAGMA_RIGHT = 5
 
  -- endgame variables
  characterCount = 6
@@ -117,15 +118,17 @@ function Map:init()
         
         -- 10% chance to generate a magma puddle
         -- make sure we're 2 tiles from edge at least
-        if x < self.mapWidth - 2 then
-            if math.random(10) == 1 then
+        if x < self.mapWidth - 3 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 and x ~= self.player.x then
+            if math.random(7) == 1 then
 
                 self:setTile(x, self.mapHeight / 2, MAGMA_LEFT)
-                self:setTile(x + 1, self.mapHeight / 2, MAGMA_RIGHT)
+                self:setTile(x + 1, self.mapHeight / 2, MAGMA_MIDDLE)
+                self:setTile(x + 2, self.mapHeight / 2, MAGMA_RIGHT)
+
             end
             
         end
-        x = x + 2
+        x = x + 3
     end
 
 
