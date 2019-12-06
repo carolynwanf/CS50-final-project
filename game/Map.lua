@@ -178,8 +178,24 @@ function Map:collides(tile)
     return false
 end
 
+function Map:deathCollide(tile)
+    -- define death tiles
+    local collidables = {
+        MAGMA_LEFT, MAGMA_MIDDLE, MAGMA_RIGHT
+
+    -- iterate and return true if our tile type matches
+    -- how to iterate over key-value pairs in lua
+    for _, v in ipairs(collidables) do
+        if tile.id == v then
+            return true
+        end
+    end
+
+    return false
+end
+
 function Map:inRange()
-    if self.player.x >= self.characters[self.screen + 1].x - 48 and self.player.x < (self.screen + 1) * VIRTUAL_WIDTH then
+    if self.player.x >= self.characters[self.screen + 1].x - 48 and self.player.x < (self.screen + 1) * VIRTUAL_WIDTH then -- ARIEL!! once we get to the end this function stops working, won't be an issue later just wanted to let you know 
         print('in range of ',self.screen + 1)
         return true
     end
@@ -206,7 +222,6 @@ function Map:update(dt)
     else
         self.characters[self.screen + 1]:stopDialogue()
     end
-
 
     -- for _, character in self.characters do
     --     if self.player:collides(character) then

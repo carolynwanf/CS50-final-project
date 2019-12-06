@@ -239,6 +239,18 @@ function Player:checkRightCollision()
     end
 end
 
+-- function Player:checkDeath()
+--     if self.dx > 0 then
+--         if self.map:deathCollide(self.map:tileAt(self.x, self.y)) or 
+--             self.map:collides(self.map:tileAt(self.x + self.width, self.y + self.height - 1)) or
+--             self.map:collides(self.map:tileAt(self.x - 1, self.y)) or
+--             self.map:collides(self.map:tileAt(self.x - 1, self.y + self.height - 1)) then
+                
+--             gameState = 'death'
+--         end
+--     end
+-- end
+
 -- TODO check if within range of NPC
 -- function Player:checkifinRange()
 --     if self.dx > 0 then
