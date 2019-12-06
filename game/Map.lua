@@ -10,6 +10,9 @@ MAGMA_LEFT = 3
 MAGMA_MIDDLE = 4
 MAGMA_RIGHT = 5
 
+CLOUD_LEFT = 6
+CLOUD_RIGHT = 7
+
  -- endgame variables
  characterCount = 6
  killCount = 3
@@ -116,6 +119,18 @@ function Map:init()
     local x = 1
     while x < self.mapWidth do
         
+        -- generate clouds
+        if x < self.mapWidth - 2 then
+            if math.random(5) == 1 then
+                
+                -- choose a random vertical spot above where blocks generate
+                local cloudStart = math.random(self.mapHeight / 2 - 6)
+
+                self:setTile(x, cloudStart, CLOUD_LEFT)
+                self:setTile(x + 1, cloudStart, CLOUD_RIGHT)
+            end
+        end
+
         -- 10% chance to generate a magma puddle
         -- make sure we're 2 tiles from edge at least
         if x < self.mapWidth - 3 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 and x ~= self.player.x then
