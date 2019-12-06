@@ -182,6 +182,7 @@ function Map:deathCollide(tile)
     -- define death tiles
     local collidables = {
         MAGMA_LEFT, MAGMA_MIDDLE, MAGMA_RIGHT
+    }
 
     -- iterate and return true if our tile type matches
     -- how to iterate over key-value pairs in lua
