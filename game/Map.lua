@@ -13,6 +13,10 @@ MAGMA_RIGHT = 5
 CLOUD_LEFT = 6
 CLOUD_RIGHT = 7
 
+PLATFORM_LEFT = 9
+PLATFORM_MIDDLE = 10
+PLATFORM_RIGHT = 11
+
  -- endgame variables
  characterCount = 6
  killCount = 3
@@ -140,6 +144,10 @@ function Map:init()
                 self:setTile(x + 1, self.mapHeight / 2, MAGMA_MIDDLE)
                 self:setTile(x + 2, self.mapHeight / 2, MAGMA_RIGHT)
 
+                local RISE = math.random(3,5)
+                self:setTile(x, self.mapHeight / 2 - RISE, PLATFORM_LEFT)
+                self:setTile(x + 1, self.mapHeight / 2 - RISE, PLATFORM_MIDDLE)
+                self:setTile(x + 2, self.mapHeight / 2 - RISE, PLATFORM_RIGHT)
             end
             
         end
@@ -156,7 +164,7 @@ end
 function Map:collides(tile)
     -- define our collidable tiles
     local collidables = {
-        TILE_TOPSOIL
+        TILE_TOPSOIL, MAGMA_LEFT, MAGMA_MIDDLE, MAGMA_RIGHT, PLATFORM_LEFT, PLATFORM_MIDDLE, PLATFORM_RIGHT
     }
 
     -- iterate and return true if our tile type matches
