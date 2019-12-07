@@ -28,23 +28,6 @@ function Character:init(x, spriteID, dialogueOptions)
     self.speechBubble = false
 end
 
--- function Character:displayDialogue()
---    self.speechBubble = true
--- end
-
--- function Character:stopDialogue()
---     self.speechBubble = false
---     print('stopped')
--- end
-
-
--- function Character:update(dt)
---     -- find some way to determine when to disable speech bubble
---     if then
-        
---     end
--- end
-
 function Character:render()
 
 
