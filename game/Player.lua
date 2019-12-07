@@ -105,6 +105,10 @@ function Player:init(map)
                 self.state = 'walking'
                 self.animations['walking']:restart()
                 self.animation = self.animations['walking']
+            elseif self.map:inRange(self.x, self.y) then
+                self.dx = 0
+                self.state = 'dialogue'
+                self.animation = self.animations['idle']
             else
                 self.dx = 0
             end
@@ -124,6 +128,10 @@ function Player:init(map)
             elseif love.keyboard.isDown('right') then
                 self.direction = 'right'
                 self.dx = WALKING_SPEED
+            elseif self.map:inRange(self.x, self.y) then
+                self.dx = 0
+                self.state = 'dialogue'
+                self.animation = self.animations['idle']
             else
                 self.dx = 0
                 self.state = 'idle'
@@ -157,6 +165,12 @@ function Player:init(map)
                 self.dx = WALKING_SPEED
             end
 
+            if self.map:inRange(self.x, self.y) then
+                self.dx = 0
+                self.state = 'dialogue'
+                self.animation = self.animations['idle']
+            end
+
             -- apply map's gravity before y velocity
             self.dy = self.dy + self.map.gravity
 
@@ -176,11 +190,55 @@ function Player:init(map)
             self:checkRightCollision()
             self:checkLeftCollision()
         end,
+        ['dialogue'] = function(dt)
+            --TODO
+            if love.keyboard.isDown('k') then
+                if love.keyboard.wasPressed('space') then
+                    self.dy = -JUMP_VELOCITY
+                    self.state = 'jumping'
+                    self.animation = self.animations['jumping']
+                    -- self.sounds['jump']:play()
+                elseif love.keyboard.isDown('left') then
+                    self.direction = 'left'
+                    self.dx = -WALKING_SPEED
+                    self.state = 'walking'
+                    self.animations['walking']:restart()
+                    self.animation = self.animations['walking']
+                elseif love.keyboard.isDown('right') then
+                    self.direction = 'right'
+                    self.dx = WALKING_SPEED
+                    self.state = 'walking'
+                    self.animations['walking']:restart()
+                    self.animation = self.animations['walking']
+                end
+            end
+            if love.keyboard.isDown('d') then
+                if love.keyboard.wasPressed('space') then
+                    self.dy = -JUMP_VELOCITY
+                    self.state = 'jumping'
+                    self.animation = self.animations['jumping']
+                    -- self.sounds['jump']:play()
+                elseif love.keyboard.isDown('left') then
+                    self.direction = 'left'
+                    self.dx = -WALKING_SPEED
+                    self.state = 'walking'
+                    self.animations['walking']:restart()
+                    self.animation = self.animations['walking']
+                elseif love.keyboard.isDown('right') then
+                    self.direction = 'right'
+                    self.dx = WALKING_SPEED
+                    self.state = 'walking'
+                    self.animations['walking']:restart()
+                    self.animation = self.animations['walking']
+                end
+            end
+        end
         -- ['dead'] = function(dt)
         --     if self:checkDeath() then
         --         self.dx = 0
         --         self.x = 0
         --         -- self.animation = self.animations['dead']
+        --         gameState = 'game over'
         --     end
         -- end
     }

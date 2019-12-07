@@ -136,7 +136,7 @@ function Map:init()
         end
 
         -- 10% chance to generate a magma puddle
-        -- make sure we're 2 tiles from edge at least
+        -- make sure we're 3 tiles from edge at least
         if x < self.mapWidth - 3 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 and x ~= self.player.x then
             if math.random(7) == 1 then
 
@@ -144,7 +144,7 @@ function Map:init()
                 self:setTile(x + 1, self.mapHeight / 2, MAGMA_MIDDLE)
                 self:setTile(x + 2, self.mapHeight / 2, MAGMA_RIGHT)
 
-                local RISE = math.random(2,4)
+                local RISE = math.random(3,4)
                 self:setTile(x, self.mapHeight / 2 - RISE, PLATFORM_LEFT)
                 self:setTile(x + 1, self.mapHeight / 2 - RISE, PLATFORM_MIDDLE)
                 self:setTile(x + 2, self.mapHeight / 2 - RISE, PLATFORM_RIGHT)
@@ -197,7 +197,6 @@ end
 
 function Map:inRange()
     if self.player.x >= self.characters[self.screen + 1].x - 48 and self.player.x < (self.screen + 1) * VIRTUAL_WIDTH then -- ARIEL!! once we get to the end this function stops working, won't be an issue later just wanted to let you know 
-        print('in range of ',self.screen + 1)
         return true
     end
     return false
@@ -328,5 +327,5 @@ function Map:render()
     for key, character in ipairs(self.characters) do
         character:render()
     end
-    
+
 end
