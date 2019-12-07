@@ -197,6 +197,10 @@ end
 
 function Map:inRange()
     if self.player.x >= self.characters[self.screen + 1].x - 48 and self.player.x < (self.screen + 1) * VIRTUAL_WIDTH then -- ARIEL!! once we get to the end this function stops working, won't be an issue later just wanted to let you know 
+<<<<<<< HEAD
+=======
+        -- print('in range of ',self.screen + 1)
+>>>>>>> a9ab6895f08c055a19c4a4f74c6b231549f5b4da
         return true
     end
     return false
@@ -218,9 +222,11 @@ function Map:update(dt)
     if self:inRange() and not self.dialogue_Fininshed then
         -- player.playerState = 'dialogue'
         -- if enter pressed then
-        self.characters[self.screen + 1]:displayDialogue()
+        self.characters[self.screen + 1].speechBubble = true
+        -- print('reviving function')
     else
-        self.characters[self.screen + 1]:stopDialogue()
+        self.characters[self.screen + 1].speechBubble = false
+        -- print('killing function')
     end
 
     -- for _, character in self.characters do

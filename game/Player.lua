@@ -163,6 +163,8 @@ function Player:init(map)
             elseif love.keyboard.isDown('right') then
                 self.direction = 'right'
                 self.dx = WALKING_SPEED
+            else
+                self.dx = 0
             end
 
             if self.map:inRange(self.x, self.y) then
