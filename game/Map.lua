@@ -77,19 +77,19 @@ function Map:init()
             'I am a spy!', 'i said something', 'i said two'
         }),
         Character(VIRTUAL_WIDTH * 2 - 100, NEUTRAL_A, {
-            'Im neutral a!' 'i said something', 'i said two'
+            'Im neutral a!', 'i said something', 'i said two'
         }),
         Character(VIRTUAL_WIDTH * 3 - 100, BAD_A, {
-            'im a baddie!' 'i said something', 'i said two'
+            'im a baddie!', 'i said something', 'i said two'
         }),
         Character(VIRTUAL_WIDTH * 4 - 100, NEUTRAL_C, {
-            'neutral c!' 'i said something', 'i said two'
+            'neutral c!', 'i said something', 'i said two'
         }),
         Character(VIRTUAL_WIDTH * 5 - 100, BAD_B, {
-            'baddie b!' 'i said something', 'i said two'
+            'baddie b!', 'i said something', 'i said two'
         }),
         Character(VIRTUAL_WIDTH * 6 - 100, NEUTRAL_B, {
-            'n b!' 'i said something', 'i said two'
+            'n b!', 'i said something', 'i said two'
         })
     }
 
@@ -195,12 +195,17 @@ function Map:deathCollide(tile)
     return false
 end
 
+
 function Map:inRange()
-    if self.player.x >= self.characters[self.screen + 1].x - 48 and self.player.x < (self.screen + 1) * VIRTUAL_WIDTH then -- ARIEL!! once we get to the end this function stops working, won't be an issue later just wanted to let you know 
+    if self.player.x >= self.characters[self.screen + 1].x - 48 and self.player.x <= self.characters[self.screen + 1].x then
         -- print('in range of ',self.screen + 1)
         return true
+    elseif self.player.x < (self.screen + 1) * VIRTUAL_WIDTH + 30 then
+        self.dialogue_Finished = false
+        return false
+    else
+        return false
     end
-    return false
 end
 
 -- function to update camera offset with delta time
@@ -211,32 +216,26 @@ function Map:update(dt)
         self.player.x = self.screen * VIRTUAL_WIDTH
     end
     
-    if self.player.x > (self.screen + 1) * VIRTUAL_WIDTH - self.player.width then
+    -- if player moves past right bound then increment screen
+    if self.player.x > (self.screen + 1) * VIRTUAL_WIDTH then
         self.screen = self.screen + 1
         self.player.x = self.screen * VIRTUAL_WIDTH
     end
 
+    -- if near npc and before dialogue then turn player state into dialogue, print dialogue
     if self:inRange() and not self.dialogue_Finished then
-        -- player.playerState = 'dialogue'
-        -- if enter pressed then
         self.characters[self.screen + 1].speechBubble = true
         self.player.state = 'dialogue'
     else
         self.characters[self.screen + 1].speechBubble = false
-        -- print('killing function')
     end
 
-    -- for _, character in self.characters do
-    --     if self.player:collides(character) then
-    --         character.displayDialogue()
 
-    --         self.currentTalkingThreshold = character.x + 100
-    --     end
+    -- reset dialogue finished state when player crosses npc
+    -- if self.player.x > self.characters[self.screen + 1].x then
+    --     self.dialogue_Finished = false
     -- end
-
-    if self.player.x >= self.currentTalkingThreshold then
-
-    end
+   
 
     if characterCount > killCount then
         gameState = 'two options'

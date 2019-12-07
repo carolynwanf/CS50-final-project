@@ -179,15 +179,15 @@ function Player:init(map)
             self:checkLeftCollision()
         end,
         ['dialogue'] = function(dt)
-            --TODO
+        
             self.dx = 0
             self.animation = self.animations['idle']
             if love.keyboard.isDown('k') then
-                map.dialogue_Fininshed = true
+                map.dialogue_Finished = true
                 self.state = 'idle'
             end
             if love.keyboard.isDown('d') then
-                map.dialogue_Fininshed = true
+                map.dialogue_Finished = true
                 self.state = 'idle'
             end
         end
