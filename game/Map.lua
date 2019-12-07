@@ -46,7 +46,7 @@ function Map:init()
     self.tiles = {}
 
     -- dialogue variable
-    self.dialogue_Fininshed = false
+    self.dialogue_Finished = false
     self.dialogue_number = 1
 
     -- initialize gamestate
@@ -74,22 +74,22 @@ function Map:init()
 
     self.characters = {
         Character(VIRTUAL_WIDTH - 100, SPY, {
-            'I am a spy!'
+            'I am a spy!', 'i said something', 'i said two'
         }),
         Character(VIRTUAL_WIDTH * 2 - 100, NEUTRAL_A, {
-            'Im neutral a!'
+            'Im neutral a!' 'i said something', 'i said two'
         }),
         Character(VIRTUAL_WIDTH * 3 - 100, BAD_A, {
-            'im a baddie!'
+            'im a baddie!' 'i said something', 'i said two'
         }),
         Character(VIRTUAL_WIDTH * 4 - 100, NEUTRAL_C, {
-            'neutral c!'
+            'neutral c!' 'i said something', 'i said two'
         }),
         Character(VIRTUAL_WIDTH * 5 - 100, BAD_B, {
-            'baddie b!'
+            'baddie b!' 'i said something', 'i said two'
         }),
         Character(VIRTUAL_WIDTH * 6 - 100, NEUTRAL_B, {
-            'n b!'
+            'n b!' 'i said something', 'i said two'
         })
     }
 
@@ -216,7 +216,7 @@ function Map:update(dt)
         self.player.x = self.screen * VIRTUAL_WIDTH
     end
 
-    if self:inRange() and not self.dialogue_Fininshed then
+    if self:inRange() and not self.dialogue_Finished then
         -- player.playerState = 'dialogue'
         -- if enter pressed then
         self.characters[self.screen + 1].speechBubble = true
