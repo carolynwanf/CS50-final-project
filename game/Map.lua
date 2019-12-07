@@ -137,7 +137,7 @@ function Map:init()
 
         -- 10% chance to generate a magma puddle
         -- make sure we're 3 tiles from edge at least
-        if x < self.mapWidth - 3 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 and x ~= self.player.x then
+        if x < self.mapWidth - 3 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 and x ~= self.player.x and x ~= self.player.x - 1 and x ~= self.player.x - 2 and x ~= self.player.x - 3 then
             if math.random(7) == 1 then
 
                 self:setTile(x, self.mapHeight / 2, MAGMA_LEFT)

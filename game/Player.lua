@@ -181,6 +181,15 @@ function Player:init(map)
         ['dialogue'] = function(dt)
             --TODO
             self.dx = 0
+            self.dy = 100
+            -- check if tile under
+            if self.map:collides(self.map:tileAt(self.x, self.y + self.height)) or
+                self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+                
+                -- if so, reset velocity and position 
+                self.dy = 0
+                self.y = (self.map:tileAt(self.x, self.y + self.height).y - 1) * self.map.tileHeight - self.height
+            end
             self.animation = self.animations['idle']
             if love.keyboard.isDown('k') then
                 map.dialogue_Fininshed = true
