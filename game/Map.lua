@@ -200,7 +200,7 @@ function Map:inRange()
     if self.player.x >= self.characters[self.screen + 1].x - 48 and self.player.x <= self.characters[self.screen + 1].x then
         -- print('in range of ',self.screen + 1)
         return true
-    elseif self.player.x < (self.screen + 1) * VIRTUAL_WIDTH + 30 then
+    elseif self.player.x < self.screen * VIRTUAL_WIDTH + 40 then
         self.dialogue_Finished = false
         return false
     else
