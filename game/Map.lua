@@ -220,7 +220,7 @@ function Map:update(dt)
         -- player.playerState = 'dialogue'
         -- if enter pressed then
         self.characters[self.screen + 1].speechBubble = true
-        -- print('reviving function')
+        self.player.state = 'dialogue'
     else
         self.characters[self.screen + 1].speechBubble = false
         -- print('killing function')
