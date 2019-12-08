@@ -217,14 +217,6 @@ function Player:init(map)
                 self.state = 'idle'
             end
         end
-        -- ['dead'] = function(dt)
-        --     if self:checkDeath() then
-        --         self.dx = 0
-        --         self.x = 0
-        --         -- self.animation = self.animations['dead']
-        --         gameState = 'game over'
-        --     end
-        -- end
     }
 end
 
