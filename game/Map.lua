@@ -139,10 +139,12 @@ function Map:init()
         if x < self.mapWidth - 3 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 and x ~= self.player.x and x ~= self.player.x - 1 and x ~= self.player.x - 2 and x ~= self.player.x - 3 then
             if math.random(7) == 1 then
 
+                -- prints a magma pit
                 self:setTile(x, self.mapHeight / 2, MAGMA_LEFT)
                 self:setTile(x + 1, self.mapHeight / 2, MAGMA_MIDDLE)
                 self:setTile(x + 2, self.mapHeight / 2, MAGMA_RIGHT)
 
+                -- prints a platform above a magma pit
                 local RISE = math.random(3,4)
                 self:setTile(x, self.mapHeight / 2 - RISE, PLATFORM_LEFT)
                 self:setTile(x + 1, self.mapHeight / 2 - RISE, PLATFORM_MIDDLE)
