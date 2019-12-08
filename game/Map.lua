@@ -17,16 +17,6 @@ PLATFORM_LEFT = 9
 PLATFORM_MIDDLE = 10
 PLATFORM_RIGHT = 11
 
- -- endgame variables
- characterCount = 6
- killCount = 3
- sum = 0
-
- badCount = 0
- spyCount = 0
- neutralCount = 0
- savePercentage = nil
-
 characterList = {'spy', ''}
 
 -- a speed to multiply delta time to scroll map; smooth value
@@ -35,13 +25,18 @@ local SCROLL_SPEED = 62
 -- constructor for our map object
 function Map:init()
 
+     -- endgame variables
+    self.characterCount = 6
+    self.killCount = 3
+    self.sum = 0
+
     self.spritesheet = love.graphics.newImage('graphics/map.png')
     self.sprites = generateQuads(self.spritesheet, 16, 16)
     -- TODO self.music = love.audio.newSource('sounds/music.wav', 'static')
 
     self.tileWidth = 16
     self.tileHeight = 16
-    self.mapWidth = 216 -- 27 (virt width) * 8 screens
+    self.mapWidth = 216
     self.mapHeight = 28
     self.tiles = {}
 
@@ -49,11 +44,17 @@ function Map:init()
     self.dialogue_Finished = false
     self.dialogue_number = 1
 
-    -- initialize gamestate
-    gameState = 'start'
+    -- kill + die option or only kill option
+    self.options = 2
 
-    character_status = {0, 0, 0, 0, 0, 0}
-    character_worth = {1, 2, 10, 2, 10 ,2}
+    -- 0 is alive and 1 is dead
+    self.character_status = {0, 0, 0, 0, 0, 0}
+
+    -- corresponds with status, their "worth for each character"
+    self.character_worth = {1, 2, 10, 2, 10 ,2}
+
+    -- key for character worth
+    self.character_type = {'spy', 'neutral', 'bad', 'neutral', 'bad', 'neutral'}
 
     -- applies positive Y influence on anything affected
     self.gravity = 20
@@ -65,14 +66,12 @@ function Map:init()
     self.camX = 0
     self.camY = -3
 
-    self.currentTalkingCharacter = nil
-    self.currentTalkingThreshold = 100
-
     -- screen for boundary checking
     self.screen = 0
 
-
+    -- npc character array with (x coordinate, name of npc, dialogue array)
     self.characters = {
+<<<<<<< HEAD
         Character(VIRTUAL_WIDTH * 3 - 100, SPY, {
             'I am a spy!', 'i said something', 'i said two'
         }),
@@ -87,12 +86,27 @@ function Map:init()
         }),
         Character(VIRTUAL_WIDTH * 7 - 100, BAD_B, {
             'baddie b!', 'i said something', 'i said two'
+=======
+        Character(VIRTUAL_WIDTH - 100, SPY, {
+            'I am a spy!', 'i said something', 'i said two', 'bitch do i live or die'
+        }),
+        Character(VIRTUAL_WIDTH * 2 - 100, NEUTRAL_A, {
+            'Im neutral a!', 'i said something', 'i said two', 'bitch do i live or die'
+        }),
+        Character(VIRTUAL_WIDTH * 3 - 100, BAD_A, {
+            'im a baddie!', 'i said something', 'i said two', 'bitch do i live or die'
+        }),
+        Character(VIRTUAL_WIDTH * 4 - 100, NEUTRAL_C, {
+            'neutral c!', 'i said something', 'i said two', 'bitch do i live or die'
+        }),
+        Character(VIRTUAL_WIDTH * 5 - 100, BAD_B, {
+            'baddie b!', 'i said something', 'i said two', 'bitch do i live or die'
+>>>>>>> ea23b0884ede39b5ca4dfc4851fb185befaed983
         }),
         Character(VIRTUAL_WIDTH * 8 - 100, NEUTRAL_B, {
             'n b!', 'i said something', 'i said two'
         })
     }
-
 
     -- cache width and height of map in pixels
     self.mapWidthPixels = self.mapWidth * self.tileWidth
@@ -107,19 +121,20 @@ function Map:init()
         end
     end
 
-    -- TODO: generate terrain
+    -- filling ground tiles
     for y = self.mapHeight / 2, self.mapHeight do
         for x = 1, self.mapWidth do
+            -- grass tiles
             if y == self.mapHeight / 2 then
                 self:setTile(x, y, TILE_TOPSOIL)
+            -- dirt tiles
             else
-            
-                -- support for multiple sheets per tile; storing tiles as tables 
-                self:setTile(x, y, TILE_MIDGROUND) --floor
+                self:setTile(x, y, TILE_MIDGROUND)
             end
         end
     end
 
+    -- generate background tiles
     local x = 1
     while x < self.mapWidth do
         
@@ -168,7 +183,6 @@ function Map:collides(tile)
     }
 
     -- iterate and return true if our tile type matches
-    -- how to iterate over key-value pairs in lua
     for _, v in ipairs(collidables) do
         if tile.id == v then
             return true
@@ -196,6 +210,7 @@ function Map:deathCollide(tile)
 end
 
 
+-- returns true if player is in range of an npc, resets the dialogue_finished variable to false when player passes npc
 function Map:inRange()
     if self.player.x >= self.characters[self.screen + 1].x - 48 and self.player.x <= self.characters[self.screen + 1].x then
         -- print('in range of ',self.screen + 1)
@@ -210,6 +225,7 @@ end
 
 -- function to update camera offset with delta time
 function Map:update(dt)
+
     self.player:update(dt)
 
     if self.player.x < self.screen * VIRTUAL_WIDTH then
@@ -230,34 +246,12 @@ function Map:update(dt)
         self.characters[self.screen + 1].speechBubble = false
     end
 
-
-    -- reset dialogue finished state when player crosses npc
-    -- if self.player.x > self.characters[self.screen + 1].x then
-    --     self.dialogue_Finished = false
-    -- end
-   
-
-    if characterCount > killCount then
-        gameState = 'two options'
-        if love.keyboard.wasPressed('k') then
-            killCount = killCount - 1
-            character_status[self.screen] = 1
-        end
-        characterCount = characterCount - 1
-    elseif characterCount == killCount and killCount ~= 0 then
-        gameState = 'one option'
-        character_status[self.screen] = 1
-        killCount = killCount - 1
-        characterCount = characterCount - 1
-    -- set game state to end, when gamestate = end tally up dead
-    else
-        gameState = 'end'
-
+    -- if we have more characters left than there are kills available then player can choose to k or d
+    if self.characterCount > self.killCount then
+        self.options = 2
+    elseif self.characterCount == self.killCount and self.killCount ~= 0 then
+        self.options = 1
     end
-
-
-            
-
     
     -- TODO keep camera's X coordinate following the player, preventing camera from
     -- scrolling past 0 to the left and the map's width (clamps)
@@ -329,5 +323,11 @@ function Map:render()
     for key, character in ipairs(self.characters) do
         character:render()
     end
+
+     -- print character count and kill count
+    love.graphics.setColor(1,1,1,255)
+    love.graphics.print("Characters left: ".. self.characterCount, self.camX + 5, 5)
+    love.graphics.print("Kills left: ".. self.killCount, self.camX + 5, 16)
+    love.graphics.setColor(1,1,1,1)
 
 end
