@@ -14,7 +14,6 @@ BAD_B = 3
 BAD_B_DEAD = 4
 
 
-
 function Character:init(x, spriteID, dialogueOptions)
 
     -- initiate all character variables for one character
@@ -28,6 +27,9 @@ function Character:init(x, spriteID, dialogueOptions)
     self.bubTexture = love.graphics.newImage('graphics/bub.png')
     self.speechBubble = false
 end
+
+-- function Character:kill()
+--     self.sprites
 
 function Character:render()
 

@@ -252,6 +252,10 @@ function Map:update(dt)
     -- scrolling past 0 to the left and the map's width (clamps)
     self.camX = math.max(0, math.min(self.player.x - VIRTUAL_WIDTH / 2,
     math.min(self.mapWidthPixels - VIRTUAL_WIDTH, self.player.x)))
+
+    -- if self.character_status[self.screen + 1 - self.titleLen] == 1 then
+    --     self.characters[self.screen + 1 - self.titleLen].spriteID = tonumber(self.characters[self.screen + 1 - self.titleLen].spriteID) + 1
+    -- end
 end
 
 -- gets the tile type at a given pixel coordinate
