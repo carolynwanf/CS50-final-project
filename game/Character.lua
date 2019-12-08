@@ -9,7 +9,7 @@ BAD_B = 3
 
 
 function Character:init(x, spriteID, dialogueOptions)
-    -- TODO generate all characters in the map
+    -- generate all characters in the map
     self.spritesheet = love.graphics.newImage('graphics/npcs.png')
     self.sprites = generateQuads(self.spritesheet, 16, 20)
 
