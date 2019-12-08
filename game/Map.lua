@@ -136,7 +136,7 @@ function Map:init()
 
         -- 10% chance to generate a magma puddle
         -- make sure we're 3 tiles from edge at least
-        if x < self.mapWidth - 3 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 and x ~= self.player.x and x ~= self.player.x - 1 and x ~= self.player.x - 2 and x ~= self.player.x - 3 then
+        if x < self.mapWidth - 3 and x > VIRTUAL_WIDTH * 3 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 and x ~= self.player.x and x ~= self.player.x - 1 and x ~= self.player.x - 2 and x ~= self.player.x - 3 then
             if math.random(7) == 1 then
 
                 -- prints a magma pit
@@ -317,6 +317,7 @@ function Map:render()
     end
 
      -- print character count and kill count
+    love.graphics.setFont(speechFont)
     love.graphics.setColor(1,1,1,255)
     love.graphics.print("Characters left: ".. self.characterCount, self.camX + 5, 5)
     love.graphics.print('Saved percentage: '.. self.savePercentage, self.camX + 5, 25)
@@ -326,6 +327,26 @@ function Map:render()
     else
         love.graphics.print("NO KILLS LEFT", self.camX + 5, 15)
     end
+    love.graphics.setColor(1,1,1,1)
+
+    -- print title
+    love.graphics.setFont(titleFont)
+    love.graphics.setColor(1,1,1,255)
+    love.graphics.print("RESURRECTION", 55, 90)
+    love.graphics.setColor(1,1,1,1)
+
+    -- print instructions
+    love.graphics.setFont(instructionsFont)
+    love.graphics.setColor(1,1,1,255)
+    love.graphics.print("you are a government agent that has been transported to an", 478, 60)
+    love.graphics.print("alien planet where many of your fellow earthlings are being", 478, 70) 
+    love.graphics.print("held hostage. your partner has been stranded on this planet", 478, 80)  
+    love.graphics.print("for the past three months and has been forced to blend in", 478, 90)
+    love.graphics.print("from the clutches of the hostile race of block men, you must", 478, 100)  
+    love.graphics.print("talk to six characters and determine which ones are evil,", 478, 110)
+    love.graphics.print("which ones are innocent civilians, and which one is your", 478, 120) 
+    love.graphics.print("partner. kill three characters, spare your partner. the fate", 478, 130)
+    love.graphics.print("of the hostages rests in your hands. good luck, agent", 478, 140)
     love.graphics.setColor(1,1,1,1)
 
 end

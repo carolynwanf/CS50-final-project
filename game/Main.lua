@@ -23,8 +23,16 @@ love.graphics.setDefaultFilter('nearest', 'nearest')
 -- performs initialization of all objects and data needed by program
 function love.load()
 
+<<<<<<< HEAD
+    -- sets up fonts
+    titleFont = love.graphics.newFont('fonts/slkscr.ttf', 40)
+    speechFont = love.graphics.newFont('fonts/font.TTF', 8)
+    instructionsFont = love.graphics.newFont('fonts/slkscr.ttf', 8)
+    
+=======
     -- sets up a different, better-looking retro font as our default
     love.graphics.setFont(love.graphics.newFont('font.ttf', 8))
+>>>>>>> a754e1571df522b3ce3fa3ad5050207faaaa6a89
 
     -- sets up virtual screen resolution for an authentic retro feel
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
