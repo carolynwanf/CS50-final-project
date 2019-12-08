@@ -205,6 +205,20 @@ function Map:collides(tile)
     return false
 end
 
+-- checks if tile is magma tile
+function Map:onFire(tile)
+    local fireables = {
+        MAGMA_LEFT, MAGMA_MIDDLE, MAGMA_RIGHT
+    }
+    -- iterate and return true if our tile type matches
+    for _, v in ipairs(fireables) do
+        if tile.id == v then
+            return true
+        end
+    end
+
+    return false
+end
 
 -- returns if player is in range of an npc, resets the dialogue_finished variable to false when player passes npc
 function Map:inRange()

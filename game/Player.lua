@@ -72,6 +72,13 @@ function Player:init(map)
             frames = {
                 love.graphics.newQuad(32, 0, 16, 20, self.texture:getDimensions())
             }
+        }),
+        ['fire'] = Animation({
+            tecture = self.texture,
+            frames = {
+                love.graphics.newQuad(64, 0, 16, 20, self.texture:getDimensions()),
+                love.graphics.newQuad(80, 0, 16, 20, self.texture:getDimensions()),
+            }
         })
     }
 
@@ -104,6 +111,14 @@ function Player:init(map)
                 self.animation = self.animations['walking']
             else
                 self.dx = 0
+            end
+
+            -- checks to see if tile under player is magma tile, switches to on fire animation
+            if self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) or 
+                self.map:onFire(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+                
+                self.state = 'fire'
+                self.animation = self.animations['fire']
             end
         end,
         ['walking'] = function(dt)
@@ -138,6 +153,14 @@ function Player:init(map)
                 -- if so, reset velocity and position and change state
                 self.state = 'jumping'
                 self.animation = self.animations['jumping']
+            end
+
+            -- checks to see if tile under player is magma tile, switches to on fire animation
+            if self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) or 
+                self.map:onFire(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+                
+                self.state = 'fire'
+                self.animation = self.animations['fire']
             end
         end,
         ['jumping'] = function(dt)
@@ -175,6 +198,68 @@ function Player:init(map)
             self:checkRightCollision()
             self:checkLeftCollision()
         end,
+
+        ['fire'] = function(dt)
+           -- keep track of input to switch movement while walking, or reset
+            -- to idle if we're not moving
+            if love.keyboard.wasPressed('space') then
+                self.dy = -JUMP_VELOCITY
+                self.state = 'jumping'
+                self.animation = self.animations['jumping']
+                -- self.sounds['jump']:play()
+            elseif love.keyboard.isDown('left') and 
+                (self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) or 
+                self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height))) then
+                
+                self.state = 'walking'
+                self.direction = 'left'
+                self.animation = self.animations['walking']
+                self.dx = -WALKING_SPEED
+
+            elseif love.keyboard.isDown('right') and 
+                (self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) or 
+                self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)))then
+
+                self.state = 'walking'
+                self.direction = 'right'
+                self.animation = self.animations['walking']
+                self.dx = WALKING_SPEED
+            else
+                self.dx = 0
+                self.state = 'idle'
+                self.animation = self.animations['idle']
+            end
+
+            -- check for collisions moving left and right
+            self:checkRightCollision()
+            self:checkLeftCollision()
+
+            -- check if there's a tile directly beneath us
+            if not self.map:collides(self.map:tileAt(self.x, self.y + self.height)) and
+                not self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+                
+                -- if so, reset velocity and position and change state
+                self.state = 'jumping'
+                self.animation = self.animations['jumping']
+            end
+
+            -- checks to see if tile under player is magma tile, if it is switches to on fire animation, if not, idle
+            if self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) == false or 
+                self.map:onFire(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) == false then
+                
+                self.state = 'idle'
+                self.animation = self.animations['idle']
+            elseif self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) or 
+                self.map:onFire(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+                
+                self.state = 'fire'
+                self.animation = self.animations['fire']
+            end
+        end, 
+                
+                    
+
+
         ['dialogue'] = function(dt)
         
             self.dx = 0
