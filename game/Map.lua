@@ -13,6 +13,8 @@ MAGMA_RIGHT = 5
 CLOUD_LEFT = 6
 CLOUD_RIGHT = 7
 
+PINK_SHROOM = 8
+
 PLATFORM_LEFT = 9
 PLATFORM_MIDDLE = 10
 PLATFORM_RIGHT = 11
@@ -150,11 +152,21 @@ function Map:init()
                 self:setTile(x + 2, self.mapHeight / 2, MAGMA_RIGHT)
 
                 -- prints a platform above a magma pit
-                local RISE = math.random(3,4)
+                local RISE = math.random(2,4)
                 self:setTile(x, self.mapHeight / 2 - RISE, PLATFORM_LEFT)
                 self:setTile(x + 1, self.mapHeight / 2 - RISE, PLATFORM_MIDDLE)
                 self:setTile(x + 2, self.mapHeight / 2 - RISE, PLATFORM_RIGHT)
+
+                --mushroom on top of platform
+                if math.random(2) == 1 then
+                    local DIST = math.random(0,2)
+                    self:setTile(x + DIST, self.mapHeight / 2 - RISE - 1, PINK_SHROOM)
+                end
+
+
             end
+
+            x = x + 3
             
         end
 
