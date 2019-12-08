@@ -70,20 +70,20 @@ function Map:init()
 
     -- npc character array with (x coordinate, name of npc, dialogue array)
     self.characters = {
-        Character(VIRTUAL_WIDTH * 3 - 100, SPY, {
-            'I am a spy!', 'i said something', 'i said two'
+        Character(VIRTUAL_WIDTH - 100, SPY, {
+            'I am a spy!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 4 - 100, NEUTRAL_A, {
-            'Im neutral a!', 'i said something', 'i said two'
+        Character(VIRTUAL_WIDTH * 2 - 100, NEUTRAL_A, {
+            'Im neutral a!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 5 - 100, BAD_A, {
-            'im a baddie!', 'i said something', 'i said two'
+        Character(VIRTUAL_WIDTH * 3 - 100, BAD_A, {
+            'im a baddie!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 6 - 100, NEUTRAL_C, {
-            'neutral c!', 'i said something', 'i said two'
+        Character(VIRTUAL_WIDTH * 4 - 100, NEUTRAL_C, {
+            'neutral c!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 7 - 100, BAD_B, {
-            'baddie b!', 'i said something', 'i said two'
+        Character(VIRTUAL_WIDTH * 5 - 100, BAD_B, {
+            'baddie b!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
         Character(VIRTUAL_WIDTH * 6 - 100, NEUTRAL_B, {
             'n b!', 'i said something', 'i said two', 'bitch do i live or die'
