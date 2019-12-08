@@ -77,22 +77,22 @@ function Map:init()
 
     -- npc character array with (x coordinate, name of npc, dialogue array)
     self.characters = {
-        Character(VIRTUAL_WIDTH * 3 - 316, SPY, {
+        Character(VIRTUAL_WIDTH * (1 + self.titleLen) - 332, SPY, {
             'I am a spy!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 4 - 316, NEUTRAL_A, {
+        Character(VIRTUAL_WIDTH * (2 + self.titleLen) - 332, NEUTRAL_A, {
             'Im neutral a!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 5 - 316, BAD_A, {
+        Character(VIRTUAL_WIDTH * (3 + self.titleLen) - 332, BAD_A, {
             'im a baddie!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 6 - 316, NEUTRAL_C, {
+        Character(VIRTUAL_WIDTH * (4 + self.titleLen) - 332, NEUTRAL_C, {
             'neutral c!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 7 - 316, BAD_B, {
+        Character(VIRTUAL_WIDTH * (5 + self.titleLen) - 332, BAD_B, {
             'baddie b!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 8 - 316, NEUTRAL_B, {
+        Character(VIRTUAL_WIDTH * (6 + self.titleLen) - 332, NEUTRAL_B, {
             'n b!', 'i said something', 'i said two', 'bitch do i live or die'
         })
     }
@@ -191,6 +191,7 @@ function Map:collides(tile)
     return false
 end
 
+-- return if collision is fatal
 function Map:deathCollide(tile)
     -- define death tiles
     local collidables = {
@@ -204,12 +205,11 @@ function Map:deathCollide(tile)
             return true
         end
     end
-
     return false
 end
 
 
--- returns true if player is in range of an npc, resets the dialogue_finished variable to false when player passes npc
+-- returns if player is in range of an npc, resets the dialogue_finished variable to false when player passes npc
 function Map:inRange()
     if map.screen >= self.titleLen then
         if self.player.x >= self.characters[self.screen + 1 - self.titleLen].x - 48 and self.player.x <= self.characters[self.screen + 1 - self.titleLen].x then
@@ -225,7 +225,7 @@ function Map:inRange()
     end
 end
 
--- function to update camera offset with delta time
+-- function to update camera offset with delta time + change screen bounds
 function Map:update(dt)
 
     self.player:update(dt)
@@ -287,6 +287,7 @@ function Map:setTile(x, y, id)
 end
 
 
+-- determines percentage of prisoners saved based on which npcs were killed
 function Map:endGame()
 
     -- tally up product of character status and worth
@@ -319,6 +320,9 @@ end
 -- renders our map to the screen, to be called by main's render
 function Map:render()
 
+    self.player:render()
+
+    -- fill the map with the background tile
     for y = 1, self.mapHeight do
         for x = 1, self.mapWidth do
             local tile = self:getTile(x, y)
@@ -329,18 +333,22 @@ function Map:render()
         end
     end
 
-    self.player:render()
-
+    -- render each character
     for key, character in ipairs(self.characters) do
-        character:render()
+        if self.character_status[key] == 1 then 
+            character:deadRender()
+        else
+            character:render()
+        end
     end
 
-     -- print character count and kill count
+     -- print character count and saved percentage
     love.graphics.setFont(speechFont)
     love.graphics.setColor(1,1,1,255)
     love.graphics.print("Characters left: ".. self.characterCount, self.camX + 5, 5)
-    love.graphics.print('Saved percentage: '.. self.savePercentage, self.camX + 5, 25)
+    love.graphics.print('Percentage of prisoners saved: '.. self.savePercentage, self.camX + 5, 25)
 
+    -- print how many kills left, if non then print NO KILLS LEFT
     if map.killCount > 0 then
         love.graphics.print("Kills left: ".. self.killCount, self.camX + 5, 15)
     else
@@ -348,13 +356,13 @@ function Map:render()
     end
     love.graphics.setColor(1,1,1,1)
 
-    -- print title
+    -- print title on screen 0
     love.graphics.setFont(titleFont)
     love.graphics.setColor(1,1,1,255)
     love.graphics.print("RESURRECTION", VIRTUAL_WIDTH / 2 - 180, 90)
     love.graphics.setColor(1,1,1,1)
 
-    -- print instructions
+    -- print backstory on screen 1
     love.graphics.setFont(instructionsFont)
     love.graphics.setColor(1,1,1,255)
     love.graphics.print("you are a government agent that has been transported to an", 1.5 * VIRTUAL_WIDTH, 60)
