@@ -192,12 +192,12 @@ function Player:init(map)
 
             -- click through dialogue
             if love.keyboard.wasPressed('return') then
-               if map.dialogue_number < 4 then -- 4 is the number of dialogues
+               if map.dialogue_number < map.max_dialogue then -- 4 is the number of dialogues
                     map.dialogue_number = map.dialogue_number + 1
                end
             
             -- if the player presses k or d then we finish the dialogue
-            elseif love.keyboard.isDown('k') and map.dialogue_number >= 4 then
+            elseif love.keyboard.isDown('k') and map.dialogue_number >= map.max_dialogue and map.canKill then
                 -- decrement character count
                 map.characterCount = map.characterCount - 1
                 -- decrement kill count
@@ -210,7 +210,7 @@ function Player:init(map)
 
                 map:endGame()
 
-            elseif love.keyboard.isDown('d') and map.dialogue_number >= 4 and map.options == 2 then
+            elseif love.keyboard.isDown('d') and map.dialogue_number >= map.max_dialogue and map.canDodge then
                 map.characterCount = map.characterCount - 1
                 map.dialogue_Finished = true
                 map.dialogue_number = 1

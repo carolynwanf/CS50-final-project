@@ -42,9 +42,11 @@ function Map:init()
     -- dialogue variable
     self.dialogue_Finished = false
     self.dialogue_number = 1
+    self.max_dialogue = 4
 
-    -- kill + die option or only kill option
-    self.options = 2
+    -- kill + die option or only kill/ die option
+    self.canKill = true
+    self.canDodge = true
 
     -- 0 is alive and 1 is dead
     self.character_status = {0, 0, 0, 0, 0, 0}
@@ -230,9 +232,14 @@ function Map:update(dt)
 
     -- if we have more characters left than there are kills available then player can choose to k or d
     if self.characterCount > self.killCount and self.killCount > 0 then
-        self.options = 2
+        self.canKill = true
+        self.canDodge = true
+    elseif self.characterCount <= self.killCount and self.killCount > 0 then
+        self.canKill = true
+        self.canDodge = false
     else
-        self.options = 1
+        self.canKill = false
+        self.canDodge = true
     end
     
     -- TODO keep camera's X coordinate following the player, preventing camera from
@@ -310,9 +317,13 @@ function Map:render()
      -- print character count and kill count
     love.graphics.setColor(1,1,1,255)
     love.graphics.print("Characters left: ".. self.characterCount, self.camX + 5, 5)
-    love.graphics.print("Kills left: ".. self.killCount, self.camX + 5, 15)
     love.graphics.print('Saved percentage: '.. self.savePercentage, self.camX + 5, 25)
-    love.graphics.setColor(1,1,1,1)
 
+    if map.killCount > 0 then
+        love.graphics.print("Kills left: ".. self.killCount, self.camX + 5, 15)
+    else
+        love.graphics.print("NO KILLS LEFT", self.camX + 5, 15)
+    end
+    love.graphics.setColor(1,1,1,1)
 
 end
