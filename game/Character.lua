@@ -1,11 +1,18 @@
 Character = Class{}
 
 SPY = 11
+SPY_DEAD = 12
 NEUTRAL_A = 5 -- neutral character a
+NEUTRAL_A_DEAD = 6
 NEUTRAL_B = 7 -- neutral character b, etc
+NEUTRAL_B_DEAD = 8
 NEUTRAL_C = 9
+NEUTRAL_C_DEAD = 10
 BAD_A = 1
+BAD_A_DEAD = 2
 BAD_B = 3
+BAD_B_DEAD = 4
+
 
 
 function Character:init(x, spriteID, dialogueOptions)
