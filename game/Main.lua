@@ -6,8 +6,8 @@ require 'Map'
 require 'Player'
 require 'Character'
 
--- close resolution to NES but 16:9
-VIRTUAL_WIDTH = 616
+-- virtual resolution
+VIRTUAL_WIDTH = 600
 VIRTUAL_HEIGHT = 243
 
 -- actual window resolution

@@ -1,10 +1,11 @@
 Character = Class{}
 
+-- spriteID for each character role
 SPY = 11
 SPY_DEAD = 12
-NEUTRAL_A = 5 -- neutral character a
+NEUTRAL_A = 5
 NEUTRAL_A_DEAD = 6
-NEUTRAL_B = 7 -- neutral character b, etc
+NEUTRAL_B = 7
 NEUTRAL_B_DEAD = 8
 NEUTRAL_C = 9
 NEUTRAL_C_DEAD = 10
@@ -30,6 +31,7 @@ function Character:init(x, spriteID, dialogueOptions)
 end
 
 
+-- render the dialogue and the LIVE version of the character
 function Character:render()
 
     if map.screen >= map.titleLen then
@@ -47,12 +49,27 @@ function Character:render()
     end
     
     love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(self.spritesheet, self.sprite, self.x, 188)
 
-    if map.character_status[map.screen + 1 - map.titleLen] == 1 then
-        love.graphics.draw(self.spritesheet, self.dead_sprite, self.x, 188)
-    else
-        love.graphics.draw(self.spritesheet, self.sprite, self.x, 188)
+end
+
+-- render the dialogue and the DEAD version of the character
+function Character:deadRender()
+    if map.screen >= map.titleLen then
+
+        if map.characters[map.screen + 1 - map.titleLen].speechBubble == true then
+            -- draw speech bubble image next to character
+            love.graphics.setColor(1, 1, 1, 1)
+            love.graphics.draw(self.bubTexture, map.characters[map.screen + 1 - map.titleLen].x - 160, 120)
+            love.graphics.setColor(0,0,0,255)
+            -- print their dialogue
+            love.graphics.print(map.characters[map.screen + 1 - map.titleLen].dialogue_Options[map.dialogue_number], map.characters[map.screen + 1 - map.titleLen].x - 80, 135)
+            love.graphics.setColor(1,1,1,1)
+        else
+        end
     end
-
+    
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(self.spritesheet, self.dead_sprite, self.x, 188)
 
 end
