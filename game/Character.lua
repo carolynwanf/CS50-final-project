@@ -9,22 +9,16 @@ BAD_B = 3
 
 
 function Character:init(x, spriteID, dialogueOptions)
-    -- generate all characters in the map
+
+    -- initiate all character variables for one character
     self.spritesheet = love.graphics.newImage('graphics/npcs.png')
     self.sprites = generateQuads(self.spritesheet, 16, 20)
-
-    self.bubTexture = love.graphics.newImage('graphics/bub.png')
-
     self.dialogue_Options = dialogueOptions
-
     self.sprite = self.sprites[spriteID]
     self.x = x
-
-
-    self.npcWidth = 16
-    self.npcHeight = 20
-    self.npcs = {}
     
+    -- initiate speech bubble variables
+    self.bubTexture = love.graphics.newImage('graphics/bub.png')
     self.speechBubble = false
 end
 

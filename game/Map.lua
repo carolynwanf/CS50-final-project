@@ -17,8 +17,6 @@ PLATFORM_LEFT = 9
 PLATFORM_MIDDLE = 10
 PLATFORM_RIGHT = 11
 
-characterList = {'spy', ''}
-
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
 
@@ -29,6 +27,7 @@ function Map:init()
     self.characterCount = 6
     self.killCount = 3
     self.sum = 0
+    self.savePercentage = 0
 
     self.spritesheet = love.graphics.newImage('graphics/map.png')
     self.sprites = generateQuads(self.spritesheet, 16, 16)
@@ -43,9 +42,11 @@ function Map:init()
     -- dialogue variable
     self.dialogue_Finished = false
     self.dialogue_number = 1
+    self.max_dialogue = 4
 
-    -- kill + die option or only kill option
-    self.options = 2
+    -- kill + die option or only kill/ die option
+    self.canKill = true
+    self.canDodge = true
 
     -- 0 is alive and 1 is dead
     self.character_status = {0, 0, 0, 0, 0, 0}
@@ -71,23 +72,23 @@ function Map:init()
 
     -- npc character array with (x coordinate, name of npc, dialogue array)
     self.characters = {
-        Character(VIRTUAL_WIDTH * 3 - 100, SPY, {
-            'I am a spy!', 'i said something', 'i said two'
+        Character(VIRTUAL_WIDTH - 100, SPY, {
+            'I am a spy!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 4 - 100, NEUTRAL_A, {
-            'Im neutral a!', 'i said something', 'i said two'
+        Character(VIRTUAL_WIDTH * 2 - 100, NEUTRAL_A, {
+            'Im neutral a!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 5 - 100, BAD_A, {
-            'im a baddie!', 'i said something', 'i said two'
+        Character(VIRTUAL_WIDTH * 3 - 100, BAD_A, {
+            'im a baddie!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 6 - 100, NEUTRAL_C, {
-            'neutral c!', 'i said something', 'i said two'
+        Character(VIRTUAL_WIDTH * 4 - 100, NEUTRAL_C, {
+            'neutral c!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 7 - 100, BAD_B, {
-            'baddie b!', 'i said something', 'i said two'
+        Character(VIRTUAL_WIDTH * 5 - 100, BAD_B, {
+            'baddie b!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 8 - 100, NEUTRAL_B, {
-            'n b!', 'i said something', 'i said two'
+        Character(VIRTUAL_WIDTH * 6 - 100, NEUTRAL_B, {
+            'n b!', 'i said something', 'i said two', 'bitch do i live or die'
         })
     }
 
@@ -230,10 +231,15 @@ function Map:update(dt)
     end
 
     -- if we have more characters left than there are kills available then player can choose to k or d
-    if self.characterCount > self.killCount then
-        self.options = 2
-    elseif self.characterCount == self.killCount and self.killCount ~= 0 then
-        self.options = 1
+    if self.characterCount > self.killCount and self.killCount > 0 then
+        self.canKill = true
+        self.canDodge = true
+    elseif self.characterCount <= self.killCount and self.killCount > 0 then
+        self.canKill = true
+        self.canDodge = false
+    else
+        self.canKill = false
+        self.canDodge = true
     end
     
     -- TODO keep camera's X coordinate following the player, preventing camera from
@@ -262,30 +268,31 @@ function Map:setTile(x, y, id)
 end
 
 
--- function Map:endGame()
---     if gameState = 'end' then
---         for index, status in character_status do
---             points = character_status[index] * character_worth[index]
---             sum = sum + points
---         end
---         if sum == 22 then -- BBN
---             savePercentage = 100
---         elseif sum == 21 then -- BBS
---             savePercentage = 20
---         elseif sum == 14 then -- BNN
---             savePercentage = 70
---         elseif sum == 13 then -- BNS
---             savePercentage = 10
---         elseif sum == 6 then -- NNN
---             savePercentage = 50
---         else if sum == 5 then -- NNS
---             savePercentage = 0
---         else -- WRONG
---             savePercentage = 6969
---         end
---     end
---     return savePercentage
--- end
+function Map:endGame()
+
+    -- tally up product of character status and worth
+    for i = 1, 6 do
+        self.sum = self.sum + self.character_status[i] * self.character_worth[i]
+    end
+
+    -- calculate percentage of saved from sum, look at formula sheet on google drive
+    if sum == 22 then -- BBN
+        self.savePercentage = 100
+    elseif sum == 21 then -- BBS
+        self.savePercentage = 20
+    elseif sum == 14 then -- BNN
+        self.savePercentage = 70
+    elseif sum == 13 then -- BNS
+        self.savePercentage = 10
+    elseif sum == 6 then -- NNN
+        self.savePercentage = 50
+    else if sum == 5 then -- NNS
+        self.savePercentage = 1
+    else -- WRONG
+        self.savePercentage = 6969
+    end
+end
+end
 
 
 -- renders our map to the screen, to be called by main's render
@@ -311,7 +318,13 @@ function Map:render()
     love.graphics.setFont(speechFont)
     love.graphics.setColor(1,1,1,255)
     love.graphics.print("Characters left: ".. self.characterCount, self.camX + 5, 5)
-    love.graphics.print("Kills left: ".. self.killCount, self.camX + 5, 16)
+    love.graphics.print('Saved percentage: '.. self.savePercentage, self.camX + 5, 25)
+
+    if map.killCount > 0 then
+        love.graphics.print("Kills left: ".. self.killCount, self.camX + 5, 15)
+    else
+        love.graphics.print("NO KILLS LEFT", self.camX + 5, 15)
+    end
     love.graphics.setColor(1,1,1,1)
 
     -- print title
