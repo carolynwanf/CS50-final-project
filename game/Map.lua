@@ -29,6 +29,7 @@ function Map:init()
     self.characterCount = 6
     self.killCount = 3
     self.sum = 0
+    self.savePercentage = 0
 
     self.spritesheet = love.graphics.newImage('graphics/map.png')
     self.sprites = generateQuads(self.spritesheet, 16, 16)
@@ -87,7 +88,7 @@ function Map:init()
             'baddie b!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
         Character(VIRTUAL_WIDTH * 6 - 100, NEUTRAL_B, {
-            'n b!', 'i said something', 'i said two'
+            'n b!', 'i said something', 'i said two', 'bitch do i live or die'
         })
     }
 
@@ -230,9 +231,9 @@ function Map:update(dt)
     end
 
     -- if we have more characters left than there are kills available then player can choose to k or d
-    if self.characterCount > self.killCount then
+    if self.characterCount > self.killCount and self.killCount > 0 then
         self.options = 2
-    elseif self.characterCount == self.killCount and self.killCount ~= 0 then
+    else
         self.options = 1
     end
     
@@ -262,30 +263,31 @@ function Map:setTile(x, y, id)
 end
 
 
--- function Map:endGame()
---     if gameState = 'end' then
---         for index, status in character_status do
---             points = character_status[index] * character_worth[index]
---             sum = sum + points
---         end
---         if sum == 22 then -- BBN
---             savePercentage = 100
---         elseif sum == 21 then -- BBS
---             savePercentage = 20
---         elseif sum == 14 then -- BNN
---             savePercentage = 70
---         elseif sum == 13 then -- BNS
---             savePercentage = 10
---         elseif sum == 6 then -- NNN
---             savePercentage = 50
---         else if sum == 5 then -- NNS
---             savePercentage = 0
---         else -- WRONG
---             savePercentage = 6969
---         end
---     end
---     return savePercentage
--- end
+function Map:endGame()
+
+    -- tally up product of character status and worth
+    for i = 1, 6 do
+        self.sum = self.sum + self.character_status[i] * self.character_worth[i]
+    end
+
+    -- calculate percentage of saved from sum, look at formula sheet on google drive
+    if sum == 22 then -- BBN
+        self.savePercentage = 100
+    elseif sum == 21 then -- BBS
+        self.savePercentage = 20
+    elseif sum == 14 then -- BNN
+        self.savePercentage = 70
+    elseif sum == 13 then -- BNS
+        self.savePercentage = 10
+    elseif sum == 6 then -- NNN
+        self.savePercentage = 50
+    else if sum == 5 then -- NNS
+        self.savePercentage = 1
+    else -- WRONG
+        self.savePercentage = 6969
+    end
+end
+end
 
 
 -- renders our map to the screen, to be called by main's render
@@ -310,7 +312,9 @@ function Map:render()
      -- print character count and kill count
     love.graphics.setColor(1,1,1,255)
     love.graphics.print("Characters left: ".. self.characterCount, self.camX + 5, 5)
-    love.graphics.print("Kills left: ".. self.killCount, self.camX + 5, 16)
+    love.graphics.print("Kills left: ".. self.killCount, self.camX + 5, 15)
+    love.graphics.print('Saved percentage: '.. self.savePercentage, self.camX + 5, 25)
+    love.graphics.print('Map Screen  '.. self.screen, self.camX + 5, 35)
     love.graphics.setColor(1,1,1,1)
 
 end

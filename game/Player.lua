@@ -205,12 +205,18 @@ function Player:init(map)
                 -- turn the status from alive (0) to dead (1)
                 map.character_status[map.screen] = 1
                 map.dialogue_Finished = true
+                map.dialogue_number = 1
                 self.state = 'idle'
+
+                map:endGame()
 
             elseif love.keyboard.isDown('d') and map.dialogue_number >= 4 and map.options == 2 then
                 map.characterCount = map.characterCount - 1
                 map.dialogue_Finished = true
+                map.dialogue_number = 1
                 self.state = 'idle'
+
+                map:endGame()
             end
         end
         -- ['dead'] = function(dt)
