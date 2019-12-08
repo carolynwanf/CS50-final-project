@@ -128,7 +128,7 @@ function Map:init()
     while x < self.mapWidth do
         
         -- generate clouds
-        if x < self.mapWidth - 2 and x > 55 then
+        if x < self.mapWidth - 2 and x > 80 then
             if math.random(3) == 1 then
                 
                 -- choose a random vertical spot above where blocks generate
@@ -141,7 +141,7 @@ function Map:init()
 
         -- 10% chance to generate a magma puddle
         -- make sure we're 3 tiles from edge at least
-        if x < self.mapWidth - 3 and x > 55 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 and x ~= self.player.x and x ~= self.player.x - 1 and x ~= self.player.x - 2 and x ~= self.player.x - 3 then
+        if x < self.mapWidth - 3 and x > 80 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 and x ~= self.player.x and x ~= self.player.x - 1 and x ~= self.player.x - 2 and x ~= self.player.x - 3 then
             if math.random(7) == 1 then
 
                 -- prints a magma pit
@@ -188,23 +188,6 @@ function Map:collides(tile)
         end
     end
 
-    return false
-end
-
--- return if collision is fatal
-function Map:deathCollide(tile)
-    -- define death tiles
-    local collidables = {
-        MAGMA_LEFT, MAGMA_MIDDLE, MAGMA_RIGHT
-    }
-
-    -- iterate and return true if our tile type matches
-    -- how to iterate over key-value pairs in lua
-    for _, v in ipairs(collidables) do
-        if tile.id == v then
-            return true
-        end
-    end
     return false
 end
 
@@ -333,7 +316,7 @@ function Map:render()
         end
     end
 
-    -- render each character
+    -- render each charactesr
     for key, character in ipairs(self.characters) do
         if self.character_status[key] == 1 then 
             character:deadRender()
