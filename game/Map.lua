@@ -128,7 +128,7 @@ function Map:init()
     while x < self.mapWidth do
         
         -- generate clouds
-        if x < self.mapWidth - 2 and x > 80 then
+        if x < self.mapWidth - 2 and x > 84 then
             if math.random(3) == 1 then
                 
                 -- choose a random vertical spot above where blocks generate
@@ -140,8 +140,8 @@ function Map:init()
         end
 
         -- 10% chance to generate a magma puddle
-        -- make sure we're 3 tiles from edge at least
-        if x < self.mapWidth - 3 and x > 80 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 and x ~= self.player.x and x ~= self.player.x - 1 and x ~= self.player.x - 2 and x ~= self.player.x - 3 then
+        -- make sure we're 3 tiles from edge, not within the expository screens, and not within a character
+        if x < self.mapWidth - 3 and x > 84 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 then
             if math.random(7) == 1 then
 
                 -- prints a magma pit
@@ -158,12 +158,14 @@ function Map:init()
             
         end
 
-        -- if x < self.mapWidth - 3 and x > 55 then
-        --     self:setTile(x, self.mapHeight / 2 - 2, MUSHROOM_1)
-        --     self:setTile(x + 1, self.mapHeight / 2 - 2, MUSHROOM_2)
-        --     self:setTile(x, self.mapHeight / 2 - 1, MUSHROOM_3)
-        --     self:setTile(x + 1, self.mapHeight / 2 - 1, MUSHROOM_4)
-        -- end
+        if x < self.mapWidth - 3 and x > 84 then
+            if math.random(10) == 1 then
+                self:setTile(x, self.mapHeight / 2 - 2, MUSHROOM_1)
+                self:setTile(x + 1, self.mapHeight / 2 - 2, MUSHROOM_2)
+                self:setTile(x, self.mapHeight / 2 - 1, MUSHROOM_3)
+                self:setTile(x + 1, self.mapHeight / 2 - 1, MUSHROOM_4)
+            end
+        end
 
         x = x + 3
     end
