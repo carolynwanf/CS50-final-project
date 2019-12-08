@@ -194,7 +194,9 @@ function Player:init(map)
             if love.keyboard.wasPressed('return') then
                if map.dialogue_number < map.max_dialogue then -- 4 is the number of dialogues
                     map.dialogue_number = map.dialogue_number + 1
-               end
+               else
+                map.printInstructions = true
+                end
             
             -- if the player presses k or d then we finish the dialogue
             elseif love.keyboard.isDown('k') and map.dialogue_number >= map.max_dialogue and map.canKill then
@@ -204,17 +206,26 @@ function Player:init(map)
                 map.killCount = map.killCount - 1
                 -- turn the status from alive (0) to dead (1)
                 map.character_status[map.screen + 1 - map.titleLen] = 1
+                -- finish dialogue state
                 map.dialogue_Finished = true
+                -- reset dialogue number to 1 for next character
                 map.dialogue_number = 1
+                -- back to idle state, allow player to move
                 self.state = 'idle'
-
+                -- turn off instructions
+                map.printInstructions = false
+                -- update saved percentage
                 map:endGame()
 
+            -- same but for dodge
             elseif love.keyboard.isDown('d') and map.dialogue_number >= map.max_dialogue and map.canDodge then
                 map.characterCount = map.characterCount - 1
                 map.dialogue_Finished = true
                 map.dialogue_number = 1
                 self.state = 'idle'
+                map.printInstructions = false
+                map:endGame()
+
             end
         end
 

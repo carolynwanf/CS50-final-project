@@ -42,7 +42,7 @@ function Character:render()
             love.graphics.draw(self.bubTexture, map.characters[map.screen + 1 - map.titleLen].x - 160, 120)
             love.graphics.setColor(0,0,0,255)
             -- print their dialogue
-            love.graphics.print(map.characters[map.screen + 1 - map.titleLen].dialogue_Options[map.dialogue_number], map.characters[map.screen + 1 - map.titleLen].x - 80, 135)
+            love.graphics.print(map.characters[map.screen + 1 - map.titleLen].dialogue_Options[map.dialogue_number], map.characters[map.screen + 1 - map.titleLen].x - 150, 135)
             love.graphics.setColor(1,1,1,1)
         else
         end
