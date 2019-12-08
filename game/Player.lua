@@ -203,7 +203,7 @@ function Player:init(map)
                 -- decrement kill count
                 map.killCount = map.killCount - 1
                 -- turn the status from alive (0) to dead (1)
-                map.character_status[map.screen] = 1
+                map.character_status[map.screen + 1 - map.titleLen] = 1
                 map.dialogue_Finished = true
                 map.dialogue_number = 1
                 self.state = 'idle'
@@ -215,8 +215,6 @@ function Player:init(map)
                 map.dialogue_Finished = true
                 map.dialogue_number = 1
                 self.state = 'idle'
-
-                map:endGame()
             end
         end
         -- ['dead'] = function(dt)

@@ -24,15 +24,18 @@ end
 
 function Character:render()
 
+    if map.screen >= map.titleLen then
 
-    if map.characters[map.screen + 1].speechBubble == true then
-        -- draw speech bubble image next to character
-        love.graphics.setColor(1, 1, 1, 1)
-        love.graphics.draw(self.bubTexture, map.characters[map.screen + 1].x - 160, 120)
-        love.graphics.setColor(0,0,0,255)
-        love.graphics.print(map.characters[map.screen + 1].dialogue_Options[map.dialogue_number], map.characters[map.screen + 1].x - 80, 135)
-        love.graphics.setColor(1,1,1,1)
-    else
+        if map.characters[map.screen + 1 - map.titleLen].speechBubble == true then
+            -- draw speech bubble image next to character
+            love.graphics.setColor(1, 1, 1, 1)
+            love.graphics.draw(self.bubTexture, map.characters[map.screen + 1 - map.titleLen].x - 160, 120)
+            love.graphics.setColor(0,0,0,255)
+            -- print their dialogue
+            love.graphics.print(map.characters[map.screen + 1 - map.titleLen].dialogue_Options[map.dialogue_number], map.characters[map.screen + 1 - map.titleLen].x - 80, 135)
+            love.graphics.setColor(1,1,1,1)
+        else
+        end
     end
     
     love.graphics.setColor(1, 1, 1, 1)

@@ -69,25 +69,26 @@ function Map:init()
 
     -- screen for boundary checking
     self.screen = 0
+    self.titleLen = 2
 
     -- npc character array with (x coordinate, name of npc, dialogue array)
     self.characters = {
-        Character(VIRTUAL_WIDTH - 100, SPY, {
+        Character(VIRTUAL_WIDTH * 3 - 100, SPY, {
             'I am a spy!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 2 - 100, NEUTRAL_A, {
+        Character(VIRTUAL_WIDTH * 4 - 100, NEUTRAL_A, {
             'Im neutral a!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 3 - 100, BAD_A, {
+        Character(VIRTUAL_WIDTH * 5 - 100, BAD_A, {
             'im a baddie!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 4 - 100, NEUTRAL_C, {
+        Character(VIRTUAL_WIDTH * 6 - 100, NEUTRAL_C, {
             'neutral c!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 5 - 100, BAD_B, {
+        Character(VIRTUAL_WIDTH * 7 - 100, BAD_B, {
             'baddie b!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 6 - 100, NEUTRAL_B, {
+        Character(VIRTUAL_WIDTH * 8 - 100, NEUTRAL_B, {
             'n b!', 'i said something', 'i said two', 'bitch do i live or die'
         })
     }
@@ -198,12 +199,15 @@ end
 
 -- returns true if player is in range of an npc, resets the dialogue_finished variable to false when player passes npc
 function Map:inRange()
-    if self.player.x >= self.characters[self.screen + 1].x - 48 and self.player.x <= self.characters[self.screen + 1].x then
-        -- print('in range of ',self.screen + 1)
-        return true
-    elseif self.player.x < self.screen * VIRTUAL_WIDTH + 40 then
-        self.dialogue_Finished = false
-        return false
+    if map.screen >= self.titleLen then
+        if self.player.x >= self.characters[self.screen + 1 - self.titleLen].x - 48 and self.player.x <= self.characters[self.screen + 1 - self.titleLen].x then
+            return true
+        elseif self.player.x < self.screen * VIRTUAL_WIDTH + 40 then
+            self.dialogue_Finished = false
+            return false
+        else
+            return false
+        end
     else
         return false
     end
@@ -226,10 +230,10 @@ function Map:update(dt)
 
     -- if near npc and before dialogue then turn player state into dialogue, print dialogue
     if self:inRange() and not self.dialogue_Finished then
-        self.characters[self.screen + 1].speechBubble = true
+        self.characters[self.screen + 1 - self.titleLen].speechBubble = true
         self.player.state = 'dialogue'
-    else
-        self.characters[self.screen + 1].speechBubble = false
+    elseif self.screen >= self.titleLen then
+        self.characters[self.screen + 1 - self.titleLen].speechBubble = false
     end
 
     -- if we have more characters left than there are kills available then player can choose to k or d
@@ -273,26 +277,28 @@ end
 function Map:endGame()
 
     -- tally up product of character status and worth
+    self.sum = 0
     for i = 1, 6 do
         self.sum = self.sum + self.character_status[i] * self.character_worth[i]
     end
 
     -- calculate percentage of saved from sum, look at formula sheet on google drive
-    if sum == 22 then -- BBN
+    if self.sum == 22 then -- BBN
         self.savePercentage = 100
-    elseif sum == 21 then -- BBS
+    elseif self.sum == 21 then -- BBS
         self.savePercentage = 20
-    elseif sum == 14 then -- BNN
+    elseif self.sum == 14 then -- BNN
         self.savePercentage = 70
-    elseif sum == 13 then -- BNS
+    elseif self.sum == 13 then -- BNS
         self.savePercentage = 10
-    elseif sum == 6 then -- NNN
+    elseif self.sum == 6 then -- NNN
         self.savePercentage = 50
-    else if sum == 5 then -- NNS
+    else if self.sum == 5 then -- NNS
         self.savePercentage = 1
     else -- WRONG
         self.savePercentage = 6969
     end
+
 end
 end
 
