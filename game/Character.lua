@@ -21,6 +21,7 @@ function Character:init(x, spriteID, dialogueOptions)
     self.sprites = generateQuads(self.spritesheet, 16, 20)
     self.dialogue_Options = dialogueOptions
     self.sprite = self.sprites[spriteID]
+    self.dead_sprite = self.sprites[spriteID + 1]
     self.x = x
     
     -- initiate speech bubble variables
@@ -48,5 +49,10 @@ function Character:render()
     end
     
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.draw(self.spritesheet, self.sprite, self.x, 188)
+    if map.character_status[map.screen + 1 - map.titleLen] == 0 then
+        love.graphics.draw(self.spritesheet, self.sprite, self.x, 188)
+    else
+        love.graphics.draw(self.spritesheet, self.dead_sprite, self.x, 188)
+    end
+
 end
