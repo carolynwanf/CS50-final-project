@@ -17,8 +17,6 @@ PLATFORM_LEFT = 9
 PLATFORM_MIDDLE = 10
 PLATFORM_RIGHT = 11
 
-characterList = {'spy', ''}
-
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
 
@@ -314,7 +312,7 @@ function Map:render()
     love.graphics.print("Characters left: ".. self.characterCount, self.camX + 5, 5)
     love.graphics.print("Kills left: ".. self.killCount, self.camX + 5, 15)
     love.graphics.print('Saved percentage: '.. self.savePercentage, self.camX + 5, 25)
-    love.graphics.print('Map Screen  '.. self.screen, self.camX + 5, 35)
     love.graphics.setColor(1,1,1,1)
+
 
 end
