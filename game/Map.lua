@@ -332,7 +332,7 @@ function Map:render()
     -- print title
     love.graphics.setFont(titleFont)
     love.graphics.setColor(1,1,1,255)
-    love.graphics.print("RESURRECTION", 55, 90)
+    love.graphics.print("RESURRECTION", 30, 90)
     love.graphics.setColor(1,1,1,1)
 
     -- print instructions
