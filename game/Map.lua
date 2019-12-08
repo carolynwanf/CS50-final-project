@@ -23,6 +23,7 @@ MUSHROOM_1 = 13
 MUSHROOM_2 = 14
 MUSHROOM_3 = 17
 MUSHROOM_4 = 18
+
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
 
@@ -41,7 +42,7 @@ function Map:init()
 
     self.tileWidth = 16
     self.tileHeight = 16
-    self.mapWidth = 216
+    self.mapWidth = 330
     self.mapHeight = 28
     self.tiles = {}
 
@@ -49,6 +50,9 @@ function Map:init()
     self.dialogue_Finished = false
     self.dialogue_number = 1
     self.max_dialogue = 4
+
+    -- print instructions variable
+    self.printInstructions = false
 
     -- kill + die option or only kill/ die option
     self.canKill = true
@@ -79,22 +83,23 @@ function Map:init()
 
     -- npc character array with (x coordinate, name of npc, dialogue array)
     self.characters = {
-        Character(VIRTUAL_WIDTH * (1 + self.titleLen) - 332, SPY, {
-            'I am a spy!', 'i said something', 'i said two', 'bitch do i live or die'
+        Character(VIRTUAL_WIDTH * (1 + self.titleLen) - 100, SPY, {
+            'WHO ARE YOU!', 'you must stop here', "if you don't stop i'm telling",
+             "hey hey no"
         }),
-        Character(VIRTUAL_WIDTH * (2 + self.titleLen) - 332, NEUTRAL_A, {
+        Character(VIRTUAL_WIDTH * (2 + self.titleLen) - 100, NEUTRAL_A, {
             'Im neutral a!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * (3 + self.titleLen) - 332, BAD_A, {
+        Character(VIRTUAL_WIDTH * (3 + self.titleLen) - 100, BAD_A, {
             'im a baddie!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * (4 + self.titleLen) - 332, NEUTRAL_C, {
+        Character(VIRTUAL_WIDTH * (4 + self.titleLen) - 100, NEUTRAL_C, {
             'neutral c!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * (5 + self.titleLen) - 332, BAD_B, {
+        Character(VIRTUAL_WIDTH * (5 + self.titleLen) - 100, BAD_B, {
             'baddie b!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * (6 + self.titleLen) - 332, NEUTRAL_B, {
+        Character(VIRTUAL_WIDTH * (6 + self.titleLen) - 100, NEUTRAL_B, {
             'n b!', 'i said something', 'i said two', 'bitch do i live or die'
         })
     }
@@ -320,8 +325,10 @@ function Map:endGame()
         self.savePercentage = 50
     else if self.sum == 5 then -- NNS
         self.savePercentage = 1
-    else -- WRONG
-        self.savePercentage = 6969
+    
+    -- RANDOM PERCENTAGE to throw off player 
+    else 
+        self.savePercentage = math.random(100)
     end
 
 end
@@ -357,7 +364,11 @@ function Map:render()
     love.graphics.setFont(speechFont)
     love.graphics.setColor(1,1,1,255)
     love.graphics.print("Characters left: ".. self.characterCount, self.camX + 5, 5)
-    love.graphics.print('Percentage of prisoners saved: '.. self.savePercentage, self.camX + 5, 25)
+    
+    -- print prisoner saved percentage if past title screen
+    if self.screen > 1 then
+        love.graphics.print('PRISONERS SAVED: '.. self.savePercentage .. '%', self.camX + 245, 25)
+    end
 
     -- print how many kills left, if non then print NO KILLS LEFT
     if map.killCount > 0 then
@@ -386,5 +397,18 @@ function Map:render()
     love.graphics.print("partner. kill three characters, spare your partner. the fate", 1.5 * VIRTUAL_WIDTH, 130)
     love.graphics.print("of the hostages rests in your hands. good luck, agent", 1.5 * VIRTUAL_WIDTH, 140)
     love.graphics.setColor(1,1,1,1)
+
+    
+    -- print error message
+    if love.keyboard.isDown('k') and self.dialogue_number >= self.max_dialogue and not self.canKill then
+        love.graphics.print("you already killed 3!", self.camX + 440, 5)
+    elseif love.keyboard.isDown('d') and map.dialogue_number >= map.max_dialogue and not map.canDodge then
+        love.graphics.print("you must kill 3 characters", self.camX + 400, 15)
+    end        
+
+    -- print instructions for kill or dodge
+    if self.printInstructions == true then
+        love.graphics.print("Press k to kill or d to dodge", self.camX + 200, 50)
+    end
 
 end
