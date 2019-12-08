@@ -14,9 +14,6 @@ function Player:init(map)
     self.width = 16
     self.height = 20
 
-    self.playerStates = {'dialogue', 'move', 'end'}
-    self.playerState = 'move'
-
     -- offset from top left to center to support sprite flipping
     self.xOffset = 8
     self.yOffset = 10
@@ -182,6 +179,7 @@ function Player:init(map)
         
             self.dx = 0
             self.dy = 100
+
             -- check if tile under
             if self.map:collides(self.map:tileAt(self.x, self.y + self.height)) or
                 self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
@@ -191,11 +189,26 @@ function Player:init(map)
                 self.y = (self.map:tileAt(self.x, self.y + self.height).y - 1) * self.map.tileHeight - self.height
             end
             self.animation = self.animations['idle']
-            if love.keyboard.isDown('k') then
+
+            -- click through dialogue
+            if love.keyboard.wasPressed('return') then
+               if map.dialogue_number < 4 then -- 4 is the number of dialogues
+                    map.dialogue_number = map.dialogue_number + 1
+               end
+            
+            -- if the player presses k or d then we finish the dialogue
+            elseif love.keyboard.isDown('k') and map.dialogue_number >= 4 then
+                -- decrement character count
+                map.characterCount = map.characterCount - 1
+                -- decrement kill count
+                map.killCount = map.killCount - 1
+                -- turn the status from alive (0) to dead (1)
+                map.character_status[map.screen] = 1
                 map.dialogue_Finished = true
                 self.state = 'idle'
-            end
-            if love.keyboard.isDown('d') then
+
+            elseif love.keyboard.isDown('d') and map.dialogue_number >= 4 and map.options == 2 then
+                map.characterCount = map.characterCount - 1
                 map.dialogue_Finished = true
                 self.state = 'idle'
             end
@@ -213,12 +226,12 @@ end
 
 
 function Player:update(dt)
+
     -- can call it and pass in delta time like it's a function because keys 'idle' etc return a function
     self.behaviors[self.state](dt)
     self.animation:update(dt)
     self.currentFrame = self.animation:getCurrentFrame()
     self.x = self.x + self.dx * dt
-
     self:calculateJumps()
 
     -- apply velocity
@@ -228,8 +241,7 @@ end
 -- jumping and block hitting logic
 function Player:calculateJumps()
     
-    -- if we have negative y velocity (jumping), check if we collide
-    -- with any blocks above us
+    -- if we have negative y velocity (jumping), check if we collide with any blocks above us
     if self.dy < 0 then
         if self.map:tileAt(self.x, self.y).id ~= TILE_EMPTY or
             self.map:tileAt(self.x + self.width - 1, self.y).id ~= TILE_EMPTY then
@@ -284,22 +296,6 @@ end
 --     return false
 -- end
 
--- TODO check if within range of NPC
--- function Player:checkifinRange()
---     if self.dx > 0 then
---         if self.map:inRange(self.map:tileAt(self.x + self.width + 3, self.y)) then
---             self.dx = 0
---             self.x = (self.map:tileAt(self.x + self.width, self.y).x - 1) * self.map.tileWidth - self.width
---         end
---     end
--- end
-
-function Player:updateBounds()
-    -- if player crosses npc
-    -- then update right bound
-    -- else if player crosses left bound
-    -- increment left bound
-end
 
 function Player:render()
     local scaleX

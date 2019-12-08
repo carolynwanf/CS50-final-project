@@ -36,7 +36,6 @@ function Character:render()
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.draw(self.bubTexture, map.characters[map.screen + 1].x - 160, 120)
         love.graphics.setColor(0,0,0,255)
-        -- print(map.characters[map.screen + 1].dialogue_Options[map.dialogue_number])
         love.graphics.print(map.characters[map.screen + 1].dialogue_Options[map.dialogue_number], map.characters[map.screen + 1].x - 80, 135)
         love.graphics.setColor(1,1,1,1)
     else
