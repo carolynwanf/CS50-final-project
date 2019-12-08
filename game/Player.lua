@@ -206,7 +206,6 @@ function Player:init(map)
                 map.character_status[map.screen + 1 - map.titleLen] = 1
                 map.dialogue_Finished = true
                 map.dialogue_number = 1
-                map.characters[map.screen + 1 - map.titleLen].spriteID = 'SPY_DEAD' -- tonumber(map.characters[map.screen + 1 - map.titleLen].spriteID) + 1
                 self.state = 'idle'
 
                 map:endGame()
