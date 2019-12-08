@@ -23,11 +23,11 @@ love.graphics.setDefaultFilter('nearest', 'nearest')
 -- performs initialization of all objects and data needed by program
 function love.load()
 
-    titleFont = love.graphics.newFont('font.TTF', 8)
-    speechFont = love.graphics.newFont('font.TTF', 32)
-    instructionsFont = love.graphics.newFont('font.TTF', 24)
+    titleFont = love.graphics.newFont('fonts/slkscr.ttf', 100)
+    speechFont = love.graphics.newFont('fonts/font.TTF', 8)
+    instructionsFont = love.graphics.newFont('fonts/slkscr.ttf', 24)
     -- sets up a different, better-looking retro font as our default
-    love.graphics.setFont(love.graphics.newFont('font.ttf', 8))
+    love.graphics.setFont(speechFont)
 
 
     -- sets up virtual screen resolution for an authentic retro feel
@@ -95,6 +95,8 @@ end
 function love.draw()
     -- begin virtual resolution drawing
     push:apply('start')
+
+  
 
     -- clear screen using Mario background blue
     love.graphics.clear(206/255, 119/255, 223/255, 255/255)
