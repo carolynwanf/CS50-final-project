@@ -17,6 +17,10 @@ PLATFORM_LEFT = 9
 PLATFORM_MIDDLE = 10
 PLATFORM_RIGHT = 11
 
+MUSHROOM_1 = 13
+MUSHROOM_2 = 14
+MUSHROOM_3 = 17
+MUSHROOM_4 = 18
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
 
@@ -153,6 +157,14 @@ function Map:init()
             end
             
         end
+
+        -- if x < self.mapWidth - 3 and x > 55 then
+        --     self:setTile(x, self.mapHeight / 2 - 2, MUSHROOM_1)
+        --     self:setTile(x + 1, self.mapHeight / 2 - 2, MUSHROOM_2)
+        --     self:setTile(x, self.mapHeight / 2 - 1, MUSHROOM_3)
+        --     self:setTile(x + 1, self.mapHeight / 2 - 1, MUSHROOM_4)
+        -- end
+
         x = x + 3
     end
 
