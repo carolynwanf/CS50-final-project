@@ -17,6 +17,10 @@ PLATFORM_LEFT = 9
 PLATFORM_MIDDLE = 10
 PLATFORM_RIGHT = 11
 
+MUSHROOM_1 = 13
+MUSHROOM_2 = 14
+MUSHROOM_3 = 17
+MUSHROOM_4 = 18
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
 
@@ -124,8 +128,8 @@ function Map:init()
     while x < self.mapWidth do
         
         -- generate clouds
-        if x < self.mapWidth - 2 then
-            if math.random(5) == 1 then
+        if x < self.mapWidth - 2 and x > 55 then
+            if math.random(3) == 1 then
                 
                 -- choose a random vertical spot above where blocks generate
                 local cloudStart = math.random(self.mapHeight / 2 - 6)
@@ -137,7 +141,7 @@ function Map:init()
 
         -- 10% chance to generate a magma puddle
         -- make sure we're 3 tiles from edge at least
-        if x < self.mapWidth - 3 and x > VIRTUAL_WIDTH * 3 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 and x ~= self.player.x and x ~= self.player.x - 1 and x ~= self.player.x - 2 and x ~= self.player.x - 3 then
+        if x < self.mapWidth - 3 and x > 55 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 and x ~= self.player.x and x ~= self.player.x - 1 and x ~= self.player.x - 2 and x ~= self.player.x - 3 then
             if math.random(7) == 1 then
 
                 -- prints a magma pit
@@ -153,6 +157,14 @@ function Map:init()
             end
             
         end
+
+        -- if x < self.mapWidth - 3 and x > 55 then
+        --     self:setTile(x, self.mapHeight / 2 - 2, MUSHROOM_1)
+        --     self:setTile(x + 1, self.mapHeight / 2 - 2, MUSHROOM_2)
+        --     self:setTile(x, self.mapHeight / 2 - 1, MUSHROOM_3)
+        --     self:setTile(x + 1, self.mapHeight / 2 - 1, MUSHROOM_4)
+        -- end
+
         x = x + 3
     end
 
