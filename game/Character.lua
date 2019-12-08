@@ -29,8 +29,6 @@ function Character:init(x, spriteID, dialogueOptions)
     self.speechBubble = false
 end
 
--- function Character:kill()
---     self.sprites
 
 function Character:render()
 
@@ -49,10 +47,12 @@ function Character:render()
     end
     
     love.graphics.setColor(1, 1, 1, 1)
-    if map.character_status[map.screen + 1 - map.titleLen] == 0 then
-        love.graphics.draw(self.spritesheet, self.sprite, self.x, 188)
-    else
+
+    if map.character_status[map.screen + 1 - map.titleLen] == 1 then
         love.graphics.draw(self.spritesheet, self.dead_sprite, self.x, 188)
+    else
+        love.graphics.draw(self.spritesheet, self.sprite, self.x, 188)
     end
+
 
 end

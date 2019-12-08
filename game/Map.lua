@@ -73,22 +73,22 @@ function Map:init()
 
     -- npc character array with (x coordinate, name of npc, dialogue array)
     self.characters = {
-        Character(VIRTUAL_WIDTH * 3 - 100, SPY, {
+        Character(VIRTUAL_WIDTH * 3 - 316, SPY, {
             'I am a spy!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 4 - 100, NEUTRAL_A, {
+        Character(VIRTUAL_WIDTH * 4 - 316, NEUTRAL_A, {
             'Im neutral a!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 5 - 100, BAD_A, {
+        Character(VIRTUAL_WIDTH * 5 - 316, BAD_A, {
             'im a baddie!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 6 - 100, NEUTRAL_C, {
+        Character(VIRTUAL_WIDTH * 6 - 316, NEUTRAL_C, {
             'neutral c!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 7 - 100, BAD_B, {
+        Character(VIRTUAL_WIDTH * 7 - 316, BAD_B, {
             'baddie b!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
-        Character(VIRTUAL_WIDTH * 8 - 100, NEUTRAL_B, {
+        Character(VIRTUAL_WIDTH * 8 - 316, NEUTRAL_B, {
             'n b!', 'i said something', 'i said two', 'bitch do i live or die'
         })
     }
@@ -339,21 +339,21 @@ function Map:render()
     -- print title
     love.graphics.setFont(titleFont)
     love.graphics.setColor(1,1,1,255)
-    love.graphics.print("RESURRECTION", 30, 90)
+    love.graphics.print("RESURRECTION", VIRTUAL_WIDTH / 2 - 180, 90)
     love.graphics.setColor(1,1,1,1)
 
     -- print instructions
     love.graphics.setFont(instructionsFont)
     love.graphics.setColor(1,1,1,255)
-    love.graphics.print("you are a government agent that has been transported to an", 478, 60)
-    love.graphics.print("alien planet where many of your fellow earthlings are being", 478, 70) 
-    love.graphics.print("held hostage. your partner has been stranded on this planet", 478, 80)  
-    love.graphics.print("for the past three months and has been forced to blend in", 478, 90)
-    love.graphics.print("from the clutches of the hostile race of block men, you must", 478, 100)  
-    love.graphics.print("talk to six characters and determine which ones are evil,", 478, 110)
-    love.graphics.print("which ones are innocent civilians, and which one is your", 478, 120) 
-    love.graphics.print("partner. kill three characters, spare your partner. the fate", 478, 130)
-    love.graphics.print("of the hostages rests in your hands. good luck, agent", 478, 140)
+    love.graphics.print("you are a government agent that has been transported to an", 1.5 * VIRTUAL_WIDTH, 60)
+    love.graphics.print("alien planet where many of your fellow earthlings are being", 1.5 * VIRTUAL_WIDTH, 70) 
+    love.graphics.print("held hostage. your partner has been stranded on this planet", 1.5 * VIRTUAL_WIDTH, 80)  
+    love.graphics.print("for the past three months and has been forced to blend in", 1.5 * VIRTUAL_WIDTH, 90)
+    love.graphics.print("from the clutches of the hostile race of block men, you must", 1.5 * VIRTUAL_WIDTH, 100)  
+    love.graphics.print("talk to six characters and determine which ones are evil,", 1.5 * VIRTUAL_WIDTH, 110)
+    love.graphics.print("which ones are innocent civilians, and which one is your", 1.5 * VIRTUAL_WIDTH, 120) 
+    love.graphics.print("partner. kill three characters, spare your partner. the fate", 1.5 * VIRTUAL_WIDTH, 130)
+    love.graphics.print("of the hostages rests in your hands. good luck, agent", 1.5 * VIRTUAL_WIDTH, 140)
     love.graphics.setColor(1,1,1,1)
 
 end
