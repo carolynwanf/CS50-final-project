@@ -38,11 +38,11 @@ function Map:init()
 
     self.spritesheet = love.graphics.newImage('graphics/map.png')
     self.sprites = generateQuads(self.spritesheet, 16, 16)
-    -- TODO self.music = love.audio.newSource('sounds/music.wav', 'static')
+    self.music = love.audio.newSource('sounds/music.ogg', 'static')
 
     self.tileWidth = 16
     self.tileHeight = 16
-    self.mapWidth = 330
+    self.mapWidth = 300
     self.mapHeight = 28
     self.tiles = {}
 
@@ -88,13 +88,13 @@ function Map:init()
              "hey hey no"
         }),
         Character(VIRTUAL_WIDTH * (2 + self.titleLen) - 100, NEUTRAL_A, {
-            'Im neutral a!', 'i said something', 'i said two', 'bitch do i live or die'
+            'Come by!', 'Have cereal and ice cream for dinner', 'and eggs too!', 'I am becoming you'
         }),
         Character(VIRTUAL_WIDTH * (3 + self.titleLen) - 100, BAD_A, {
             'im a baddie!', 'i said something', 'i said two', 'bitch do i live or die'
         }),
         Character(VIRTUAL_WIDTH * (4 + self.titleLen) - 100, NEUTRAL_C, {
-            'neutral c!', 'i said something', 'i said two', 'bitch do i live or die'
+            'Hey stinky', 'my dancing doesnt look clean :(', 'shoot, my phone is at 2%', 'call you later?'
         }),
         Character(VIRTUAL_WIDTH * (5 + self.titleLen) - 100, BAD_B, {
             'baddie b!', 'i said something', 'i said two', 'bitch do i live or die'
@@ -149,7 +149,7 @@ function Map:init()
         -- 10% chance to generate a magma puddle
         -- make sure we're 3 tiles from edge, not within the expository screens, and not within a character
         if x < self.mapWidth - 3 and x > 84 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 then
-            if math.random(7) == 1 then
+            if math.random(6) == 1 then
 
                 -- prints a magma pit
                 self:setTile(x, self.mapHeight / 2, MAGMA_LEFT)
@@ -157,11 +157,16 @@ function Map:init()
                 self:setTile(x + 2, self.mapHeight / 2, MAGMA_RIGHT)
 
                 -- prints a platform above a magma pit
-                local RISE = math.random(2,4)
+                local RISE = math.random(3,6)
                 self:setTile(x, self.mapHeight / 2 - RISE, PLATFORM_LEFT)
                 self:setTile(x + 1, self.mapHeight / 2 - RISE, PLATFORM_MIDDLE)
                 self:setTile(x + 2, self.mapHeight / 2 - RISE, PLATFORM_RIGHT)
 
+                if RISE == 5 or RISE == 6 then
+                    self:setTile(x - 3, self.mapHeight / 2 - 3, PLATFORM_LEFT)
+                    self:setTile(x - 2, self.mapHeight / 2 - 3, PLATFORM_MIDDLE)
+                    self:setTile(x - 1, self.mapHeight / 2 - 3, PLATFORM_RIGHT)
+                end
                 --mushroom on top of platform
                 if math.random(2) == 1 then
                     local DIST = math.random(0,2)
@@ -176,7 +181,7 @@ function Map:init()
         end
 
         if x < self.mapWidth - 3 and x > 84 then
-            if math.random(10) == 1 then
+            if math.random(5) == 1 then
                 self:setTile(x, self.mapHeight / 2 - 2, MUSHROOM_1)
                 self:setTile(x + 1, self.mapHeight / 2 - 2, MUSHROOM_2)
                 self:setTile(x, self.mapHeight / 2 - 1, MUSHROOM_3)
@@ -188,9 +193,9 @@ function Map:init()
     end
 
 
-    -- TODO: start the background music
-    --self.music:setLooping(true)
-    -- self.music:play()
+    -- start the background music
+    self.music:setLooping(true)
+    self.music:play()
 end
 
 -- return whether a given tile is collidable

@@ -22,12 +22,12 @@ function Player:init(map)
     self.map = map
     self.texture = love.graphics.newImage('graphics/player.png')
 
-    -- TODO sound effects
-    -- self.sounds = {
-    --     ['jump'] = love.audio.newSource('sounds/jump.wav', 'static'),
-    --     ['hit'] = love.audio.newSource('sounds/hit.wav', 'static'),
-    --     ['coin'] = love.audio.newSource('sounds/coin.wav', 'static')
-    -- }
+    -- sound effects
+    self.sounds = {
+        ['jump'] = love.audio.newSource('sounds/jump.wav', 'static'),
+        ['sizzle'] = love.audio.newSource('sounds/sizzle.wav', 'static'),
+        ['death'] = love.audio.newSource('sounds/death.wav', 'static')
+    }
 
     -- animation frames
     self.frames = {}
@@ -76,8 +76,7 @@ function Player:init(map)
         ['fire'] = Animation({
             tecture = self.texture,
             frames = {
-                love.graphics.newQuad(64, 0, 16, 20, self.texture:getDimensions()),
-                love.graphics.newQuad(80, 0, 16, 20, self.texture:getDimensions()),
+                love.graphics.newQuad(64, 0, 16, 20, self.texture:getDimensions())
             }
         })
     }
@@ -96,7 +95,7 @@ function Player:init(map)
                 self.dy = -JUMP_VELOCITY
                 self.state = 'jumping'
                 self.animation = self.animations['jumping']
-                -- self.sounds['jump']:play()
+                self.sounds['jump']:play()
             elseif love.keyboard.isDown('left') then
                 self.direction = 'left'
                 self.dx = -WALKING_SPEED
@@ -113,12 +112,20 @@ function Player:init(map)
                 self.dx = 0
             end
 
+             -- check if there's a tile directly beneath us
+            if not self.map:collides(self.map:tileAt(self.x, self.y + self.height)) and
+                not self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+             
+                -- if so, reset velocity and position and change state
+                self.state = 'jumping'
+                self.animation = self.animations['jumping']
+            end
             -- checks to see if tile under player is magma tile, switches to on fire animation
-            if self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) or 
-                self.map:onFire(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+            if self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) then
                 
                 self.state = 'fire'
                 self.animation = self.animations['fire']
+                self.sounds['sizzle']:play()
             end
         end,
         ['walking'] = function(dt)
@@ -129,7 +136,7 @@ function Player:init(map)
                 self.dy = -JUMP_VELOCITY
                 self.state = 'jumping'
                 self.animation = self.animations['jumping']
-                -- self.sounds['jump']:play()
+                self.sounds['jump']:play()
             elseif love.keyboard.isDown('left') then
                 self.direction = 'left'
                 self.dx = -WALKING_SPEED
@@ -156,11 +163,11 @@ function Player:init(map)
             end
 
             -- checks to see if tile under player is magma tile, switches to on fire animation
-            if self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) or 
-                self.map:onFire(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+            if self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) then
                 
                 self.state = 'fire'
                 self.animation = self.animations['fire']
+                self.sounds['sizzle']:play()
             end
         end,
         ['jumping'] = function(dt)
@@ -206,10 +213,9 @@ function Player:init(map)
                 self.dy = -JUMP_VELOCITY
                 self.state = 'jumping'
                 self.animation = self.animations['jumping']
-                -- self.sounds['jump']:play()
+                self.sounds['jump']:play()
             elseif love.keyboard.isDown('left') and 
-                (self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) or 
-                self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height))) then
+                self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) then
                 
                 self.state = 'walking'
                 self.direction = 'left'
@@ -217,8 +223,7 @@ function Player:init(map)
                 self.dx = -WALKING_SPEED
 
             elseif love.keyboard.isDown('right') and 
-                (self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) or 
-                self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)))then
+                self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) then
 
                 self.state = 'walking'
                 self.direction = 'right'
@@ -234,24 +239,22 @@ function Player:init(map)
             self:checkRightCollision()
             self:checkLeftCollision()
 
-            -- check if there's a tile directly beneath us
+             -- check if there's a tile directly beneath us
             if not self.map:collides(self.map:tileAt(self.x, self.y + self.height)) and
-                not self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
-                
+             not self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+             
                 -- if so, reset velocity and position and change state
                 self.state = 'jumping'
                 self.animation = self.animations['jumping']
             end
 
             -- checks to see if tile under player is magma tile, if it is switches to on fire animation, if not, idle
-            if self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) == false or 
-                self.map:onFire(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) == false then
+            if self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) == false then
                 
                 self.state = 'idle'
                 self.animation = self.animations['idle']
-            elseif self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) or 
-                self.map:onFire(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
-                
+            elseif self.map:onFire(self.map:tileAt(self.x, self.y + self.height)) then
+                self.sounds['sizzle']:play()
                 self.state = 'fire'
                 self.animation = self.animations['fire']
             end
@@ -285,6 +288,8 @@ function Player:init(map)
             
             -- if the player presses k or d then we finish the dialogue
             elseif love.keyboard.isDown('k') and map.dialogue_number >= map.max_dialogue and map.canKill then
+                --play kill sound
+                self.sounds['death']:play()
                 -- decrement character count
                 map.characterCount = map.characterCount - 1
                 -- decrement kill count
