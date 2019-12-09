@@ -156,7 +156,7 @@ function Map:init()
 
         -- 1/7 chance of generating a magma puddle, can be same column as cloud
         -- make sure we're 3 tiles from edge, not within the expository screens, and not within a character
-        if x < self.mapWidth - 3 and x > 84 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 then
+        if x < self.mapWidth - 3 and x > 84 then
             if math.random(6) == 1 then
 
                 -- prints a magma pit
