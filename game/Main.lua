@@ -23,7 +23,7 @@ love.graphics.setDefaultFilter('nearest', 'nearest')
 -- performs initialization of all objects and data needed by program
 function love.load()
     -- sets up fonts
-    titleFont = love.graphics.newFont('fonts/slkscre.ttf', 40)
+    titleFont = love.graphics.newFont('fonts/slkscre.ttf', 65)
     speechFont = love.graphics.newFont('fonts/font.TTF', 8)
     headerFont = love.graphics.newFont('fonts/slkscre.ttf', 15)
     instructionsFont = love.graphics.newFont('fonts/slkscre.ttf', 8)
@@ -38,7 +38,7 @@ function love.load()
         resizable = true
     })
 
-    love.window.setTitle('Resurrection (in progress)')
+    love.window.setTitle('UNDERTONE')
 
     -- an object to contain our map data
     map = Map()
