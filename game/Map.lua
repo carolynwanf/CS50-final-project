@@ -94,24 +94,25 @@ function Map:init()
 
     -- npc character array with (x coordinate, name of npc, dialogue array)
     self.characters = {
+        -- calls character:init()
         Character(VIRTUAL_WIDTH * (1 + self.titleLen) - 100, SPY, {
-            'WHO ARE YOU?!', 'you must stop here', "if you don't stop i'm telling",
+            '      WHO ARE YOU?!', '     you must stop here', " if you don't stop i'm telling",
              "MOMMY THERE's A WEIRD PERSON!!"
         }),
         Character(VIRTUAL_WIDTH * (2 + self.titleLen) - 100, NEUTRAL_A, {
-            'i have four lines?', 'wait what', 'now i have two?', 'wait no'
+            '  i have four lines?', '      wait what', '   now i have two?', '      wait no'
         }),
         Character(VIRTUAL_WIDTH * (3 + self.titleLen) - 100, BAD_A, {
-            'come by!', 'Have cereal', 'and eggs too!', 'I am becoming you'
+            '      come by!', '    Have cereal', '    and eggs too!', '  I am becoming you'
         }),
         Character(VIRTUAL_WIDTH * (4 + self.titleLen) - 100, NEUTRAL_C, {
-            'HEY STINKY', 'look at my dancing', 'shoot my phone died', 'call you later?'
+            '      HEY STINKY', '   look at my dancing', '  shoot my phone died    ', '    call you later?'
         }),
         Character(VIRTUAL_WIDTH * (5 + self.titleLen) - 100, BAD_B, {
-            'excuse me?', 'do you have lice', 'no?', 'okay :('
+            '      excuse me?', '   do you have lice', '      no?', '      okay :('
         }),
         Character(VIRTUAL_WIDTH * (6 + self.titleLen) - 100, NEUTRAL_B, {
-            'HEY PUNK', 'wanna go to berg?', 'i think you do!', 'lets go'
+            '      HEY PUNK', '   wanna go to berg?', '  i think you do!', '       lets go'
         })
     }
 
