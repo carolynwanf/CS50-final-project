@@ -405,7 +405,8 @@ function Map:render()
     -- print title on screen 0
     love.graphics.setFont(titleFont)
     love.graphics.setColor(1,1,1,255)
-    love.graphics.print("RESURRECTION", VIRTUAL_WIDTH / 2 - 180, 90)
+    love.graphics.print("UNDERTONE", VIRTUAL_WIDTH / 2 - 235, 80)
+    love.graphics.setColor(1,1,1,1)
 
     -- print backstory on screen 1
     love.graphics.setFont(instructionsFont)
