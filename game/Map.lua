@@ -106,7 +106,7 @@ function Map:init()
             '      come by!', '    Have cereal', '    and eggs too!', '  I am becoming you'
         }),
         Character(VIRTUAL_WIDTH * (4 + self.titleLen) - 100, NEUTRAL_C, {
-            '      HEY STINKY', '   look at my dancing', '  shoot my phone died    ', '    call you later?'
+            '      HEY STINKY', '   look at me', '  wait my phone died', '    call you later?'
         }),
         Character(VIRTUAL_WIDTH * (5 + self.titleLen) - 100, BAD_B, {
             '      excuse me?', '   do you have lice', '      no?', '      okay :('
