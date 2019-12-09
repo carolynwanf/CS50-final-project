@@ -96,13 +96,13 @@ function Map:init()
     self.characters = {
         Character(VIRTUAL_WIDTH * (1 + self.titleLen) - 100, SPY, {
             'WHO ARE YOU?!', 'you must stop here', "if you don't stop i'm telling",
-             "hey hey no"
+             "MOMMY THERE's A WEIRD PERSON!!"
         }),
         Character(VIRTUAL_WIDTH * (2 + self.titleLen) - 100, NEUTRAL_A, {
-            'come by!', 'Have cereal', 'and eggs too!', 'I am becoming you'
+            'i have four lines?', 'wait what', 'now i have two?', 'wait no'
         }),
         Character(VIRTUAL_WIDTH * (3 + self.titleLen) - 100, BAD_A, {
-            'i have four lines?', 'wait what', 'now i have two?', 'wait no'
+            'come by!', 'Have cereal', 'and eggs too!', 'I am becoming you'
         }),
         Character(VIRTUAL_WIDTH * (4 + self.titleLen) - 100, NEUTRAL_C, {
             'HEY STINKY', 'look at my dancing', 'shoot my phone died', 'call you later?'
@@ -431,7 +431,9 @@ function Map:render()
 
     -- print instructions for kill or dodge
     if self.printInstructions == true then
-        love.graphics.print("Press k to kill or d to dodge", self.camX + 200, 50)
+        love.graphics.print("Press k to kill or d to dodge", self.camX + 205, 50)
     end
 
+    -- reset default colour to black
+    love.graphics.setColor(1,1,1,1)
 end
