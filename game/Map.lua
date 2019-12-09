@@ -42,6 +42,7 @@ function Map:init()
     self.sprites = generateQuads(self.spritesheet, 16, 16)
 
     -- initialize music
+    -- music from https://opengameart.org/content/the-adventure-begins-8-bit-remix
     self.music = love.audio.newSource('sounds/music.ogg', 'static')
 
     -- initialize tile and map dimensions
@@ -97,19 +98,19 @@ function Map:init()
              "hey hey no"
         }),
         Character(VIRTUAL_WIDTH * (2 + self.titleLen) - 100, NEUTRAL_A, {
-            'come by!', 'Have cereal and ice cream', 'and eggs too!', 'I am becoming you'
+            'come by!', 'Have cereal', 'and eggs too!', 'I am becoming you'
         }),
         Character(VIRTUAL_WIDTH * (3 + self.titleLen) - 100, BAD_A, {
             'i have four lines?', 'wait what', 'now i have two?', 'wait no'
         }),
         Character(VIRTUAL_WIDTH * (4 + self.titleLen) - 100, NEUTRAL_C, {
-            'HEY STINKY', 'look at my dancing', 'shoot, my phone is at 2 percent', 'call you later?'
+            'HEY STINKY', 'look at my dancing', 'shoot my phone died', 'call you later?'
         }),
         Character(VIRTUAL_WIDTH * (5 + self.titleLen) - 100, BAD_B, {
-            'excuse me?', 'do you have a charger?', 'no?', 'okay :('
+            'excuse me?', 'do you have lice', 'no?', 'okay :('
         }),
         Character(VIRTUAL_WIDTH * (6 + self.titleLen) - 100, NEUTRAL_B, {
-            'HEY PUNK', 'wanna go to annenberg?', 'i think you do!', 'lets go'
+            'HEY PUNK', 'wanna go to berg?', 'i think you do!', 'lets go'
         })
     }
 
