@@ -290,7 +290,7 @@ function Map:update(dt)
         self.canDodge = true
     end
     
-    -- TODO keep camera's X coordinate following the player, preventing camera from
+    -- keep camera's X coordinate following the player, preventing camera from
     -- scrolling past 0 to the left and the map's width (clamps)
     self.camX = math.max(0, math.min(self.player.x - VIRTUAL_WIDTH / 2,
     math.min(self.mapWidthPixels - VIRTUAL_WIDTH, self.player.x)))
@@ -412,12 +412,14 @@ function Map:render()
     love.graphics.print("you are a government agent that has been transported to an", 1.5 * VIRTUAL_WIDTH, 60)
     love.graphics.print("alien planet where many of your fellow earthlings are being", 1.5 * VIRTUAL_WIDTH, 70) 
     love.graphics.print("held hostage. your partner has been stranded on this planet", 1.5 * VIRTUAL_WIDTH, 80)  
-    love.graphics.print("for the past three months and has been forced to blend in", 1.5 * VIRTUAL_WIDTH, 90)
-    love.graphics.print("from the clutches of the hostile race of block men, you must", 1.5 * VIRTUAL_WIDTH, 100)  
-    love.graphics.print("talk to six characters and determine which ones are evil,", 1.5 * VIRTUAL_WIDTH, 110)
-    love.graphics.print("which ones are innocent civilians, and which one is your", 1.5 * VIRTUAL_WIDTH, 120) 
-    love.graphics.print("partner. kill three characters, spare your partner. the fate", 1.5 * VIRTUAL_WIDTH, 130)
-    love.graphics.print("of the hostages rests in your hands. good luck, agent", 1.5 * VIRTUAL_WIDTH, 140)
+    love.graphics.print("for the past three months and has been forced to blend in.", 1.5 * VIRTUAL_WIDTH, 90)
+    love.graphics.print("to save these hostages from the clutches of the hostile race", 1.5 * VIRTUAL_WIDTH, 100)  
+    love.graphics.print("of block men, you must talk to six characters and determine", 1.5 * VIRTUAL_WIDTH, 110)
+    love.graphics.print("which ones are evil, which ones are civilians, and which one", 1.5 * VIRTUAL_WIDTH, 120) 
+    love.graphics.print("is your partner. kill three characters, spare your partner.", 1.5 * VIRTUAL_WIDTH, 130)
+    love.graphics.print("the fate of the hostages rests in your hands. good luck, agent", 1.5 * VIRTUAL_WIDTH, 140)
+    love.graphics.setColor(1,1,1,1)
+
     
     -- print error message
     if love.keyboard.isDown('k') and self.dialogue_number >= self.max_dialogue and not self.canKill then
