@@ -307,6 +307,11 @@ function Player:init(map)
                 -- update saved percentage
                 map:endGame()
 
+                -- display final score if last character
+                if map.screen >= 7 then
+                    map.finalScore = true
+                end
+
             -- same but for dodge
             elseif love.keyboard.isDown('d') and map.dialogue_number >= map.max_dialogue and map.canDodge then
                 map.characterCount = map.characterCount - 1
@@ -315,6 +320,10 @@ function Player:init(map)
                 self.state = 'idle'
                 map.printInstructions = false
                 map:endGame()
+                
+                if map.screen >= 7 then
+                    map.finalScore = true
+                end
 
             end
         end

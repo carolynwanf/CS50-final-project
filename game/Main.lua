@@ -25,6 +25,7 @@ function love.load()
     -- sets up fonts
     titleFont = love.graphics.newFont('fonts/slkscre.ttf', 40)
     speechFont = love.graphics.newFont('fonts/font.TTF', 8)
+    headerFont = love.graphics.newFont('fonts/slkscre.ttf', 15)
     instructionsFont = love.graphics.newFont('fonts/slkscre.ttf', 8)
     
     -- sets up a different, better-looking retro font as our default

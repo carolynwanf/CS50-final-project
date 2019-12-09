@@ -36,6 +36,7 @@ function Map:init()
     self.killCount = 3
     self.sum = 0
     self.savePercentage = 0
+    self.finalScore = false
 
     -- initialize spritesheet
     self.spritesheet = love.graphics.newImage('graphics/map.png')
@@ -328,13 +329,13 @@ function Map:endGame()
     if self.sum == 22 then -- BBN
         self.savePercentage = 100
     elseif self.sum == 21 then -- BBS
-        self.savePercentage = 20
+        self.savePercentage = 21
     elseif self.sum == 14 then -- BNN
-        self.savePercentage = 70
+        self.savePercentage = 76
     elseif self.sum == 13 then -- BNS
-        self.savePercentage = 10
+        self.savePercentage = 16
     elseif self.sum == 6 then -- NNN
-        self.savePercentage = 50
+        self.savePercentage = 52
     else if self.sum == 5 then -- NNS
         self.savePercentage = 1
     
@@ -370,25 +371,34 @@ function Map:render()
         else
             character:render()
         end
-    end
-
-     -- print character count and saved percentage
-    love.graphics.setFont(speechFont)
-    love.graphics.setColor(1,1,1,255)
-    love.graphics.print("Characters left: ".. self.characterCount, self.camX + 5, 5)
+    end    
     
-    -- print prisoner saved percentage if past title screen
+    -- print prisoner saved percentage and kill count if past title screen
     if self.screen > 1 then
-        love.graphics.print('PRISONERS SAVED: '.. self.savePercentage .. '%', self.camX + 245, 25)
+
+        love.graphics.setColor(1,1,1,255)
+        love.graphics.setFont(speechFont)
+        -- print big for last screen
+        if not self.finalScore then
+            love.graphics.print('PRISONERS SAVED: '.. self.savePercentage .. '%', self.camX + 245, 25)
+        else
+            love.graphics.setFont(headerFont)
+            love.graphics.print('PRISONERS SAVED: '.. self.savePercentage .. '%', self.camX + 160, 25)
+            love.graphics.setFont(speechFont)
+        end
+        
+        love.graphics.print("Characters left: ".. self.characterCount, self.camX + 5, 5)
+
+        if map.killCount > 0 then
+            love.graphics.print("Kills left: ".. self.killCount, self.camX + 5, 15)
+        else
+            love.graphics.print("NO KILLS LEFT", self.camX + 5, 15)
+        end
+        -- reset colour to black
+        love.graphics.setColor(1,1,1,1)
     end
 
-    -- print how many kills left, if non then print NO KILLS LEFT
-    if map.killCount > 0 then
-        love.graphics.print("Kills left: ".. self.killCount, self.camX + 5, 15)
-    else
-        love.graphics.print("NO KILLS LEFT", self.camX + 5, 15)
-    end
-    love.graphics.setColor(1,1,1,1)
+    
 
     -- print title on screen 0
     love.graphics.setFont(titleFont)
