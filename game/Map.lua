@@ -2,6 +2,7 @@ require 'Util'
 
 Map = Class{}
 
+-- ID for tiles in sprite sheet
 TILE_MIDGROUND = 2
 TILE_TOPSOIL = 1
 TILE_EMPTY = -1
@@ -24,27 +25,36 @@ MUSHROOM_2 = 14
 MUSHROOM_3 = 17
 MUSHROOM_4 = 18
 
--- a speed to multiply delta time to scroll map; smooth value
+-- map scrolling speed, multiplied by dt
 local SCROLL_SPEED = 62
 
--- constructor for our map object
+-- constructor for map object
 function Map:init()
 
-     -- endgame variables
+     -- initialize endgame variables
     self.characterCount = 6
     self.killCount = 3
     self.sum = 0
     self.savePercentage = 0
 
+    -- initialize spritesheet
     self.spritesheet = love.graphics.newImage('graphics/map.png')
     self.sprites = generateQuads(self.spritesheet, 16, 16)
+<<<<<<< HEAD
     self.music = love.audio.newSource('sounds/music.ogg', 'static')
+=======
+>>>>>>> 14498f23cd6f8f68be98cac7d8532f6ce14a8926
 
+    -- initialize tile and map dimensions
     self.tileWidth = 16
     self.tileHeight = 16
     self.mapWidth = 300
     self.mapHeight = 28
     self.tiles = {}
+    
+    -- map width in pixels
+    self.mapWidthPixels = self.mapWidth * self.tileWidth
+    self.mapHeightPixels = self.mapHeight * self.tileHeight
 
     -- dialogue variable
     self.dialogue_Finished = false
@@ -54,11 +64,11 @@ function Map:init()
     -- print instructions variable
     self.printInstructions = false
 
-    -- kill + die option or only kill/ die option
+    -- option to kill or dodge npc
     self.canKill = true
     self.canDodge = true
 
-    -- 0 is alive and 1 is dead
+    -- status of npcs, 0 is alive and 1 is dead
     self.character_status = {0, 0, 0, 0, 0, 0}
 
     -- corresponds with status, their "worth for each character"
@@ -88,10 +98,14 @@ function Map:init()
              "hey hey no"
         }),
         Character(VIRTUAL_WIDTH * (2 + self.titleLen) - 100, NEUTRAL_A, {
+<<<<<<< HEAD
             'Come by!', 'Have cereal and ice cream for dinner', 'and eggs too!', 'I am becoming you'
+=======
+            'i have four lines?', 'wait what', 'now i have two?', 'wait no'
+>>>>>>> 14498f23cd6f8f68be98cac7d8532f6ce14a8926
         }),
         Character(VIRTUAL_WIDTH * (3 + self.titleLen) - 100, BAD_A, {
-            'im a baddie!', 'i said something', 'i said two', 'bitch do i live or die'
+            'i have four lines?', 'wait what', 'now i have two?', 'wait no'
         }),
         Character(VIRTUAL_WIDTH * (4 + self.titleLen) - 100, NEUTRAL_C, {
             'Hey stinky', 'my dancing doesnt look clean :(', 'shoot, my phone is at 2%', 'call you later?'
@@ -104,11 +118,7 @@ function Map:init()
         })
     }
 
-    -- cache width and height of map in pixels
-    self.mapWidthPixels = self.mapWidth * self.tileWidth
-    self.mapHeightPixels = self.mapHeight * self.tileHeight
-
-    -- first, fill map with empty tiles
+    -- fill map with empty tiles
     for y = 1, self.mapHeight do
         for x = 1, self.mapWidth do
             
@@ -134,7 +144,7 @@ function Map:init()
     local x = 1
     while x < self.mapWidth do
         
-        -- generate clouds
+        -- 1/c change to generate clouds
         if x < self.mapWidth - 2 and x > 84 then
             if math.random(3) == 1 then
                 
@@ -146,7 +156,7 @@ function Map:init()
             end
         end
 
-        -- 10% chance to generate a magma puddle
+        -- 1/7 chance of generating a magma puddle, can be same column as cloud
         -- make sure we're 3 tiles from edge, not within the expository screens, and not within a character
         if x < self.mapWidth - 3 and x > 84 and x ~= self.characters[self.screen + 1].x and x ~= self.characters[self.screen + 1].x - 1 and x ~= self.characters[self.screen + 1].x - 2 then
             if math.random(6) == 1 then
@@ -176,6 +186,7 @@ function Map:init()
 
             end
 
+            -- increment x so magma puddle does not overlap
             x = x + 3
             
         end
@@ -189,6 +200,7 @@ function Map:init()
             end
         end
 
+        -- increment x so mushroom does not overlap
         x = x + 3
     end
 
