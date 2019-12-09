@@ -96,13 +96,13 @@ function Map:init()
     self.characters = {
         Character(VIRTUAL_WIDTH * (1 + self.titleLen) - 100, SPY, {
             'WHO ARE YOU?!', 'you must stop here', "if you don't stop i'm telling",
-             "hey hey no"
+             "MOMMY THERE's A WEIRD PERSON!!"
         }),
         Character(VIRTUAL_WIDTH * (2 + self.titleLen) - 100, NEUTRAL_A, {
-            'come by!', 'Have cereal', 'and eggs too!', 'I am becoming you'
+            'i have four lines?', 'wait what', 'now i have two?', 'wait no'
         }),
         Character(VIRTUAL_WIDTH * (3 + self.titleLen) - 100, BAD_A, {
-            'i have four lines?', 'wait what', 'now i have two?', 'wait no'
+            'come by!', 'Have cereal', 'and eggs too!', 'I am becoming you'
         }),
         Character(VIRTUAL_WIDTH * (4 + self.titleLen) - 100, NEUTRAL_C, {
             'HEY STINKY', 'look at my dancing', 'shoot my phone died', 'call you later?'
@@ -405,7 +405,6 @@ function Map:render()
     love.graphics.setFont(titleFont)
     love.graphics.setColor(1,1,1,255)
     love.graphics.print("RESURRECTION", VIRTUAL_WIDTH / 2 - 180, 90)
-    love.graphics.setColor(1,1,1,1)
 
     -- print backstory on screen 1
     love.graphics.setFont(instructionsFont)
@@ -419,8 +418,6 @@ function Map:render()
     love.graphics.print("which ones are innocent civilians, and which one is your", 1.5 * VIRTUAL_WIDTH, 120) 
     love.graphics.print("partner. kill three characters, spare your partner. the fate", 1.5 * VIRTUAL_WIDTH, 130)
     love.graphics.print("of the hostages rests in your hands. good luck, agent", 1.5 * VIRTUAL_WIDTH, 140)
-    love.graphics.setColor(1,1,1,1)
-
     
     -- print error message
     if love.keyboard.isDown('k') and self.dialogue_number >= self.max_dialogue and not self.canKill then
@@ -431,7 +428,9 @@ function Map:render()
 
     -- print instructions for kill or dodge
     if self.printInstructions == true then
-        love.graphics.print("Press k to kill or d to dodge", self.camX + 200, 50)
+        love.graphics.print("Press k to kill or d to dodge", self.camX + 205, 50)
     end
 
+    -- reset default colour to black
+    love.graphics.setColor(1,1,1,1)
 end
