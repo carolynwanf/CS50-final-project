@@ -146,7 +146,7 @@ function Map:init()
             if math.random(3) == 1 then
                 
                 -- choose a random vertical spot above where blocks generate
-                local cloudStart = math.random(self.mapHeight / 2 - 6)
+                local cloudStart = math.random(self.mapHeight / 2 - 8)
 
                 self:setTile(x, cloudStart, CLOUD_LEFT)
                 self:setTile(x + 1, cloudStart, CLOUD_RIGHT)
