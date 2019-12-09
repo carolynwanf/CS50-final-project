@@ -40,10 +40,9 @@ function Map:init()
     -- initialize spritesheet
     self.spritesheet = love.graphics.newImage('graphics/map.png')
     self.sprites = generateQuads(self.spritesheet, 16, 16)
-<<<<<<< HEAD
+
+    -- initialize music
     self.music = love.audio.newSource('sounds/music.ogg', 'static')
-=======
->>>>>>> 14498f23cd6f8f68be98cac7d8532f6ce14a8926
 
     -- initialize tile and map dimensions
     self.tileWidth = 16
@@ -98,11 +97,7 @@ function Map:init()
              "hey hey no"
         }),
         Character(VIRTUAL_WIDTH * (2 + self.titleLen) - 100, NEUTRAL_A, {
-<<<<<<< HEAD
             'Come by!', 'Have cereal and ice cream for dinner', 'and eggs too!', 'I am becoming you'
-=======
-            'i have four lines?', 'wait what', 'now i have two?', 'wait no'
->>>>>>> 14498f23cd6f8f68be98cac7d8532f6ce14a8926
         }),
         Character(VIRTUAL_WIDTH * (3 + self.titleLen) - 100, BAD_A, {
             'i have four lines?', 'wait what', 'now i have two?', 'wait no'
